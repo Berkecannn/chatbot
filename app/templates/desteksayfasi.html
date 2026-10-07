@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B³Bot Destek Merkezi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Floating Shapes Background -->
+    <div class="floating-shapes">
+        <div class="shape">
+            <i class="fas fa-circle" style="font-size: 100px;"></i>
+        </div>
+        <div class="shape">
+            <i class="fas fa-square" style="font-size: 80px;"></i>
+        </div>
+        <div class="shape">
+            <i class="fas fa-triangle" style="font-size: 90px;"></i>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <svg class="icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Chat bubble background -->
+                    <defs>
+                        <linearGradient id="bubbleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#4ECDC4;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#44A08D;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feDropShadow dx="3" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.2"/>
+                        </filter>
+                    </defs>
+                    
+                    <!-- Main chat bubble -->
+                    <rect x="10" y="15" width="65" height="45" rx="12" ry="12" 
+                          fill="url(#bubbleGradient)" filter="url(#shadow)"/>
+                    
+                    <!-- Chat bubble tail -->
+                    <path d="M20 60 L10 75 L30 60 Z" fill="url(#bubbleGradient)" filter="url(#shadow)"/>
+                    
+                    <!-- Letter B -->
+                    <text x="42" y="45" font-family="Arial, sans-serif" font-size="28" font-weight="bold" 
+                          fill="#2C3E50" text-anchor="middle">B</text>
+                    
+                    <!-- Superscript 3 -->
+                    <text x="70" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" 
+                          fill="#2C3E50">3</text>
+                </svg>
+                <h1>B³Bot</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" onclick="navigateTo('home')">Ana Sayfa</a></li>
+                    <li><a href="#" onclick="navigateTo('pricing')">Fiyatlandırma</a></li>
+                    <li><a href="#" class="login-button" onclick="login()">Giriş Yap</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h2>Size nasıl yardımcı olabiliriz?</h2>
+            
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" placeholder="Sorununuzu buraya yazın..." id="searchInput" onkeypress="handleSearch(event)">
+                    <button class="search-button" onclick="performSearch()">
+                        <i class="fa-solid fa-magnifying-glass icon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="category-container">
+                <div class="category-grid">
+                    <!-- Üst sıra -->
+                    <div class="category-box" onclick="selectCategory('getting-started')">
+                        <i class="fa-solid fa-rocket icon"></i>
+                        <p>Başlarken</p>
+                    </div>
+                    <div class="category-box" onclick="selectCategory('account')">
+                        <i class="fa-solid fa-user icon"></i>
+                        <p>Hesap Yönetimi</p>
+                    </div>
+                    <div class="category-box" onclick="selectCategory('integrations')">
+                        <i class="fa-solid fa-puzzle-piece icon"></i>
+                        <p>Entegrasyonlar</p>
+                    </div>
+                    
+                    <!-- Alt sıra -->
+                    <div class="category-box" onclick="selectCategory('billing')">
+                        <i class="fa-solid fa-credit-card icon"></i>
+                        <p>Faturalandırma</p>
+                    </div>
+                    <div class="category-box" onclick="selectCategory('troubleshooting')">
+                        <i class="fa-solid fa-wrench icon"></i>
+                        <p>Sorun Giderme</p>
+                    </div>
+                    <div class="category-box" onclick="selectCategory('faq')">
+                        <i class="fa-solid fa-circle-question icon"></i>
+                        <p>S.S.S</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+[
+  {
+    "id": "045bf269-6d62-46a9-9e6c-30e164c5b927",
+    "message": "Yeni soru: 'sıcak kahveler...'",
+    "timestamp": "2025-10-29T16:21:03.546607",
+    "type": "unanswered_question",
+    "sid": "tVfNDyO_VjwwQg4SAAAL",
+    "user_name": "berkecan",
+    "chat_display_id": "202510290006",
+    "question": "sıcak kahveler"
+  },
+  {
+    "id": "689a6f72-f35b-456f-8a22-3a230b14bf53",
+    "message": "Yeni soru: 'hava durumu...'",
+    "timestamp": "2025-10-29T16:18:59.300725",
+    "type": "unanswered_question",
+    "sid": "2kEl8_wXaL33nmfMAAAJ",
+    "user_name": "berkecan",
+    "chat_display_id": "202510290005",
+    "question": "hava durumu"
+  },
+  {
+    "id": "3cd88fc3-32e3-4238-b29e-64c16be94231",
+    "message": "Yeni soru: 'khva...'",
+    "timestamp": "2025-10-29T12:01:27.882184",
+    "type": "unanswered_question",
+    "sid": "gxJtB90ZAeu_MHadAAAL",
+    "user_name": "berkecan",
+    "chat_display_id": "202510290006",
+    "question": "khva"
+  },
+  {
+    "id": "1abde570-ef37-4ba7-935d-87f294a550d8",
+    "message": "Sistem Hatası: SMTP kimlik doğrulama hatası: (535, b'5.7.8 Username and Password not accepted. For more information, go to\\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-429952b79cbsm25129375f8f.4 - gsmtp'). Kullanıcı adı/şifre yanlış olabilir.",
+    "timestamp": "2025-10-29T12:00:52.076551",
+    "type": "system_error",
+    "sid": null,
+    "user_name": null,
+    "chat_display_id": null
+  },
+  {
+    "id": "e824e17c-b59a-49ef-8a8e-fcb0d92f3870",
+    "message": "Yeni soru: 'khva...'",
+    "timestamp": "2025-10-29T12:00:29.960051",
+    "type": "unanswered_question",
+    "sid": "mMYjTEg_4y0E3tN4AAAJ",
+    "user_name": "berkecan",
+    "chat_display_id": "202510290005",
+    "question": "khva"
+  },
+  {
+    "id": "c465ae6a-1a2a-4e0b-9cce-9e87d504f4c5",
+    "message": "Sistem Hatası: SMTP kimlik doğrulama hatası: (535, b'5.7.8 Username and Password not accepted. For more information, go to\\n5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-4771e3b68fesm36218445e9.13 - gsmtp'). Kullanıcı adı/şifre yanlış olabilir.",
+    "timestamp": "2025-10-29T12:00:28.266531",
+    "type": "system_error",
+    "sid": null,
+    "user_name": null,
+    "chat_display_id": null
+  },
+  {
+    "id": "55587c75-b256-4f88-b470-c8340979392b",
+    "message": "Yeni soru: 'hava...'",
+    "timestamp": "2025-10-29T12:00:05.123411",
+    "type": "unanswered_question",
+    "sid": "7Ipsizul8RsQOA_JAAAH",
+    "user_name": "berkecan",
+    "chat_display_id": "202510290004",
+    "question": "hava",
+    "is_deleted": true
+  },
+  {
+    "id": "bb3684ba-2036-446b-a01b-9c09a3a7b39d",
+    "message": "Sistem Hatası: SMTP kimlik doğrulama hatası: (535, b'5.7.8 Username and Password not accepted. For more information, go to\\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-429952b79cbsm25124127f8f.4 - gsmtp'). Kullanıcı adı/şifre yanlış olabilir.",
+    "timestamp": "2025-10-29T11:59:59.495371",
+    "type": "system_error",
+    "sid": null,
+    "user_name": null,
+    "chat_display_id": null
+  },
+  {
+    "id": "585ed28c-a268-4032-b7ab-a247d4cf8824",
+    "message": "Yeni soru: 'bugün hava nasıl...'",
+    "timestamp": "2025-10-29T11:59:36.790032",
+    "type": "unanswered_question",
+    "sid": "T980ZPGBTQ7mNM_GAAAF",
+    "user_name": "berkecan",
+    "chat_display_id": "202510290003",
+    "question": "bugün hava nasıl",
+    "is_deleted": true
+  },
+  {
+    "id": "146d7f39-a4d1-432a-9f1c-608957529b05",
+    "message": "Yeni soru: 'khave...'",
+    "timestamp": "2025-10-29T11:56:52.661032",
+    "type": "unanswered_question",
+    "sid": "yDHRKMCTeVyrUUVVAAAB",
+    "user_name": "Berkecan",
+    "chat_display_id": "202510290001",
+    "question": "khave",
+    "is_deleted": true
+  },
+  {
+    "id": "99ae51e8-1147-4a99-a009-25e2a76b8016",
+    "message": "Yeni soru: '31...'",
+    "timestamp": "2025-08-19T13:34:34.699459",
+    "type": "unanswered_question",
+    "sid": null
+  },
+  {
+    "id": "5e2f5365-5ca9-4fb1-b845-18bb11fc777c",
+    "message": "Yeni soru: 'd...'",
+    "timestamp": "2025-08-18T11:16:38.730305"
+  },
+  {
+    "id": "e05b42df-c540-493f-90b1-7e8b22338a8a",
+    "message": "Yeni soru: 'gdfsgs...'",
+    "timestamp": "2025-08-17T21:21:00.971997"
+  },
+  {
+    "id": "a1840f7f-0f3a-4734-bf0a-ad1c7a061774",
+    "message": "Yeni soru: 'olmaz...'",
+    "timestamp": "2025-08-13T23:25:26.545384"
+  },
+  {
+    "id": "d922cdb4-9b0f-445d-89e9-6cfb80d3e390",
+    "message": "Yeni soru: 'olur...'",
+    "timestamp": "2025-08-13T23:21:33.605979"
+  },
+  {
+    "id": "40519f59-c0ee-45ec-b02c-d2ccd594f0b7",
+    "message": "Yeni soru: 'nasılsın...'",
+    "timestamp": "2025-08-13T23:17:16.853885"
+  },
+  {
+    "id": "8f33cb42-12b6-418a-990b-03edd9e74e30",
+    "message": "Yeni soru: 'nasılsın...'",
+    "timestamp": "2025-08-13T23:16:25.211837"
+  },
+  {
+    "id": "11594048-4f90-4feb-99e3-ff4d5b3d4c08",
+    "message": "Yeni soru: 'hayır...'",
+    "timestamp": "2025-08-13T23:06:37.093295"
+  },
+  {
+    "id": "2c295ec1-5607-4ebf-8e84-27049ae744f2",
+    "message": "Yeni soru: 'naber...'",
+    "timestamp": "2025-08-13T23:03:54.392612"
+  },
+  {
+    "id": "f1977ce0-f265-44e7-a366-8c2109d4f019",
+    "message": "Yeni soru: 'naber...'",
+    "timestamp": "2025-08-13T22:57:49.455762"
+  },
+  {
+    "id": "6a44157c-f6b3-42f7-93d7-150022dbb619",
+    "message": "Yeni soru: 'naber...'",
+    "timestamp": "2025-08-13T22:49:04.463470"
+  },
+  {
+    "id": "7a3d0d64-a234-466a-b86e-08ef51883e9a",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:46:45.083247"
+  },
+  {
+    "id": "f03bc2d7-9a04-4f56-93cc-887c77d0ae8a",
+    "message": "Yeni soru: 'naber...'",
+    "timestamp": "2025-08-13T22:46:34.780294"
+  },
+  {
+    "id": "fe80fb80-4c92-46aa-91f8-2ba9e089abb4",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:33:31.337891"
+  },
+  {
+    "id": "54adfe1b-7155-4d77-872d-4cd7a07ec0ba",
+    "message": "Yeni soru: 'asdklh...'",
+    "timestamp": "2025-08-13T22:33:21.121236"
+  },
+  {
+    "id": "e2aaf319-ed4b-4c3d-97c5-dc686b858f13",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:27:45.213123"
+  },
+  {
+    "id": "76b12e0a-e82c-4929-a65f-680cc1bbc245",
+    "message": "Yeni soru: 'jusdba...'",
+    "timestamp": "2025-08-13T22:27:34.982169"
+  },
+  {
+    "id": "4a74ffff-c6b2-4918-956c-92b0942d920c",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:26:15.774339"
+  },
+  {
+    "id": "eda605a7-1ef0-4dca-9efd-3765905d450c",
+    "message": "Yeni soru: 'nslg...'",
+    "timestamp": "2025-08-13T22:26:05.558188"
+  },
+  {
+    "id": "62b0a630-ef27-48a6-aa86-7c7359b6e07a",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:23:47.209843"
+  },
+  {
+    "id": "7fbb47a7-0943-401a-8fe5-55bba92a4ffb",
+    "message": "Yeni soru: 'flkjbadsil...'",
+    "timestamp": "2025-08-13T22:23:36.936889"
+  },
+  {
+    "id": "224116d4-3220-455e-bc38-bee5e8c47349",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:23:31.481292"
+  },
+  {
+    "id": "2ca93292-6ae2-4897-a9cb-8182101fd5ad",
+    "message": "Yeni soru: 'kjldsaşbf...'",
+    "timestamp": "2025-08-13T22:23:21.250968"
+  },
+  {
+    "id": "9fd24fdb-42b4-4038-b9aa-dbf325c311fa",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:23:17.737111"
+  },
+  {
+    "id": "4b379e5b-9daa-4135-a420-a84fe3d50504",
+    "message": "Yeni soru: 'nşkjadsfb...'",
+    "timestamp": "2025-08-13T22:23:07.549725"
+  },
+  {
+    "id": "05f4f314-5cd4-425c-a0a8-3473943a09d6",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:22:59.675227"
+  },
+  {
+    "id": "8b01a09a-3b30-488e-b6ce-bb9ff69ad1c7",
+    "message": "Yeni soru: 'kjabdsşfba...'",
+    "timestamp": "2025-08-13T22:22:49.474836"
+  },
+  {
+    "id": "42167994-d9d1-437c-b68a-09332d1d594e",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:22:46.339845"
+  },
+  {
+    "id": "b1b0c166-c3ef-4831-b303-7034f38d9cc6",
+    "message": "Yeni soru: 'adfjbşa...'",
+    "timestamp": "2025-08-13T22:22:36.078367"
+  },
+  {
+    "id": "03d7f29b-652a-4e8e-8a86-851e62cbdb78",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:22:31.964410"
+  },
+  {
+    "id": "ed13745f-9849-4ce2-8f53-867aeabb9d39",
+    "message": "Yeni soru: 'fakjdb...'",
+    "timestamp": "2025-08-13T22:22:21.771215"
+  },
+  {
+    "id": "d9407ff0-d309-4315-8a44-f5e1dc7bc809",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:22:16.899474"
+  },
+  {
+    "id": "9d92a3c9-fb50-4404-8e9d-45b0360b0a0d",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:22:09.213972"
+  },
+  {
+    "id": "4ef4eddf-b885-4daf-999f-f9ac5ba190cd",
+    "message": "Yeni soru: 'akjşdshf...'",
+    "timestamp": "2025-08-13T22:22:06.699495"
+  },
+  {
+    "id": "83de4e13-68e7-413d-bbf9-7b9309792c2c",
+    "message": "Yeni soru: 'gsdlknn...'",
+    "timestamp": "2025-08-13T22:21:59.019404"
+  },
+  {
+    "id": "1c192ebb-aa5e-446b-90b1-01069f6e03be",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:05:12.106732"
+  },
+  {
+    "id": "5072047c-1770-41f2-9426-d499ece344cc",
+    "message": "Yeni soru: 'naber...'",
+    "timestamp": "2025-08-13T22:05:01.884030"
+  },
+  {
+    "id": "66b8aa3c-d348-416b-98cf-825af9211425",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T22:02:25.400371"
+  },
+  {
+    "id": "866a9096-e26b-4fd0-ad50-e4ea1caab409",
+    "message": "Yeni soru: 'naber...'",
+    "timestamp": "2025-08-13T22:02:15.186020"
+  },
+  {
+    "id": "04ac3164-07ee-4008-b531-ca5c6ce66618",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T21:55:52.193435"
+  },
+  {
+    "id": "ead2c2bd-972b-41c8-8a35-6d4178e4be76",
+    "message": "Yeni soru: 'naber...'",
+    "timestamp": "2025-08-13T21:55:41.707608"
+  },
+  {
+    "id": "3b1ffbc4-2578-408f-a882-c3a2868db6e3",
+    "message": "Sistem Hatası: E-posta gönderilemedi.",
+    "timestamp": "2025-08-13T21:41:20.867673"
+  },
+  {
+    "id": "f8398474-fad8-429f-888d-3f9c46854be7",
+    "message": "Yeni soru: 'naber...'",
+    "timestamp": "2025-08-13T21:41:10.640446"
+  }
+]

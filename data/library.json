@@ -1,0 +1,180 @@
+{
+  "_responses": {
+    "RESP_0000": {
+      "responses": [
+        "Tabi ki, işte menümüz:"
+      ],
+      "bubbles": [
+        {
+          "text": "Sıcak Kahveler",
+          "value": "sicak_kahveler"
+        },
+        {
+          "text": "Soğuk Kahveler",
+          "value": "soguk_kahveler"
+        }
+      ]
+    },
+    "RESP_0001": {
+      "responses": [
+        "Sıcak kahvelerimiz:"
+      ],
+      "bubbles": [
+        {
+          "text": "Americano",
+          "value": "americano"
+        },
+        {
+          "text": "Filtre Kahve",
+          "value": "filtre_kahve"
+        }
+      ]
+    },
+    "RESP_0002": {
+      "responses": [
+        "Soğuk kahvelerimiz:"
+      ],
+      "bubbles": [
+        {
+          "text": "Iced Latte",
+          "value": "iced_latte"
+        },
+        {
+          "text": "Cold Brew",
+          "value": "cold_brew"
+        }
+      ]
+    },
+    "RESP_0003": {
+      "responses": [
+        "Americano siparişiniz hazırlanıyor. Tutar 90 TL."
+      ]
+    },
+    "RESP_0004": {
+      "responses": [
+        "Filtre Kahve siparişiniz hazırlanıyor. Tutar 80 TL."
+      ]
+    },
+    "RESP_0005": {
+      "responses": [
+        "Iced Latte siparişiniz hazırlanıyor. Tutar 100 TL."
+      ]
+    },
+    "RESP_0006": {
+      "responses": [
+        "Cold Brew siparişiniz hazırlanıyor. Tutar 110 TL."
+      ]
+    },
+    "RESP_0007": {
+      "responses": [
+        "Merhaba, nasıl yardımcı olabilirim?",
+        "Selam! Kahve menümüzü görmek ister misiniz?"
+      ]
+    },
+    "RESP_0008": {
+      "responses": [
+        "Rica ederim, afiyet olsun!",
+        "Ne demek, her zaman bekleriz."
+      ]
+    },
+    "RESP_S_B": {
+      "responses": [
+        "Sipariş numaranızı veya faturanızda belirtilen takip numarasını yazar mısınız?"
+      ],
+      "bubbles": [],
+      "action": "start_flow:order_info_flow"
+    },
+    "RESP_GEN_INFO": {
+      "action": "start_flow:info_request_flow"
+    },
+    "RESP_0011": {
+      "responses": [
+        "23 derece"
+      ],
+      "original_question": "hava durumu"
+    }
+  },
+  "intents": {
+    "menu": {
+      "response_id": "RESP_0000"
+    },
+    "menü": {
+      "response_id": "RESP_0000"
+    },
+    "menüyü alabilir miyim": {
+      "response_id": "RESP_0000"
+    },
+    "ne var": {
+      "response_id": "RESP_0000"
+    },
+    "kahveler": {
+      "response_id": "RESP_0000"
+    },
+    "sicak_kahveler": {
+      "response_id": "RESP_0001"
+    },
+    "soguk_kahveler": {
+      "response_id": "RESP_0002"
+    },
+    "americano": {
+      "response_id": "RESP_0003"
+    },
+    "filtre_kahve": {
+      "response_id": "RESP_0004"
+    },
+    "iced_latte": {
+      "response_id": "RESP_0005"
+    },
+    "cold_brew": {
+      "response_id": "RESP_0006"
+    },
+    "selamlama": {
+      "response_id": "RESP_0007"
+    },
+    "merhaba": {
+      "response_id": "RESP_0007"
+    },
+    "selam": {
+      "response_id": "RESP_0007"
+    },
+    "iyi günler": {
+      "response_id": "RESP_0007"
+    },
+    "tesekkur": {
+      "response_id": "RESP_0008"
+    },
+    "teşekkür ederim": {
+      "response_id": "RESP_0008"
+    },
+    "sağ ol": {
+      "response_id": "RESP_0008"
+    },
+    "çok teşekkürler": {
+      "response_id": "RESP_0008"
+    },
+    "sipariş bilgisi": {
+      "response_id": "RESP_S_B"
+    },
+    "siparis_bilgisi": {
+      "response_id": "RESP_S_B"
+    },
+    "siparişimi kontrol etmek istiyorum": {
+      "response_id": "RESP_S_B"
+    },
+    "sipariş bilgisi almak istiyorum": {
+      "response_id": "RESP_S_B"
+    },
+    "siparişime ne oldu": {
+      "response_id": "RESP_S_B"
+    },
+    "sipariş durumu": {
+      "response_id": "RESP_S_B"
+    },
+    "bilgi_almak": {
+      "response_id": "RESP_GEN_INFO"
+    },
+    "havadurumu": {
+      "response_id": "RESP_0011"
+    }
+  }
+}

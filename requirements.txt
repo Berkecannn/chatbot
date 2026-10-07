@@ -1,0 +1,16 @@
+flask
+flask-login
+python-dotenv
+bcrypt
+PyJWT
+sentence-transformers
+transformers
+torch
+numpy
+flask-socketio
+eventlet
+pytz
+python-telegram-bot
+httpx
+cryptography
+tf-keras

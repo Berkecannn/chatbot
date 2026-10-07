@@ -1,0 +1,117 @@
+{
+  "ee4c33bf-6dd1-4ea4-bef0-e083a8e9c6d4": {
+    "question": "asdklh",
+    "answer": null,
+    "timestamp": "2025-08-13T22:33:31.338917"
+  },
+  "e9ac53b0-2aa9-4ee8-8547-31dc88cdcfd3": {
+    "question": "naber",
+    "answer": "iyidir",
+    "timestamp": "2025-08-13T22:46:45.085536"
+  },
+  "3898ef39-2763-4c76-bcb9-478c1687ae6a": {
+    "question": "naber",
+    "answer": null,
+    "timestamp": "2025-08-13T23:03:56.007850"
+  },
+  "551670c3-567e-44ff-af62-e1564ce4b0c3": {
+    "question": "naber",
+    "answer": null,
+    "timestamp": "2025-08-13T23:06:00.098603"
+  },
+  "258d5037-3a3b-47e2-8d68-cd011b2a224f": {
+    "question": "naber",
+    "answer": null,
+    "timestamp": "2025-08-13T23:06:21.779464"
+  },
+  "26f3b051-0fab-4aae-bcfa-c76d7e208422": {
+    "question": "hayır",
+    "answer": null,
+    "timestamp": "2025-08-13T23:06:38.800450"
+  },
+  "2b733601-01cc-43d2-9aa9-bb6af36027c6": {
+    "question": "nasılsın",
+    "answer": null,
+    "timestamp": "2025-08-13T23:17:18.658868"
+  },
+  "54ac3ac7-c38c-40c4-bbcf-965b381362a6": {
+    "question": "olur",
+    "answer": null,
+    "timestamp": "2025-08-13T23:21:35.343560"
+  },
+  "b1338589-340a-4e76-bb04-0e8fd2ba1e07": {
+    "question": "olmaz",
+    "answer": null,
+    "timestamp": "2025-08-13T23:25:28.286755"
+  },
+  "df67bff3-46ff-401f-9369-175ed3b4d818": {
+    "question": "gdfsgs",
+    "answer": null,
+    "timestamp": "2025-08-17T21:21:00.969481",
+    "reply_token": "414bc875-1c53-41af-a0aa-0e064627ae81",
+    "sid": "2bvLdefNIJX4jTNuAAAT"
+  },
+  "83094216-74d0-4538-8463-5d3fe1d7f6c3": {
+    "question": "d",
+    "answer": null,
+    "timestamp": "2025-08-18T11:16:38.730305",
+    "reply_token": "db56ea20-d199-4776-83fe-14e1888f9d95",
+    "sid": "bOp2Y4UuJriRpPH9AAAF"
+  },
+  "e125e576-2dad-4220-ba40-3aecaa3d1952": {
+    "question": "31",
+    "answer": null,
+    "timestamp": "2025-08-19T13:34:34.695076",
+    "reply_token": "2d5a7fac-7267-4901-970e-dff662dc600b",
+    "sid": "zpvim2W1YI-l3_h9AAAF"
+  },
+  "497e8f4d-18e6-410b-970d-3a5da1ed19cf": {
+    "question": "khave",
+    "answer": null,
+    "timestamp": "2025-10-29T11:56:52.661032",
+    "reply_token": "1257773a-e4bb-493d-828f-dc0db504846a",
+    "sid": "yDHRKMCTeVyrUUVVAAAB"
+  },
+  "30f992f3-cb4c-4342-a5eb-63e6a4c24613": {
+    "question": "bugün hava nasıl",
+    "answer": null,
+    "timestamp": "2025-10-29T11:59:36.785718",
+    "reply_token": "d3494980-d297-4ebf-97bd-47deb2de2f26",
+    "sid": "T980ZPGBTQ7mNM_GAAAF"
+  },
+  "40cbf731-8b3c-4344-9660-42436bd9c12e": {
+    "question": "hava",
+    "answer": null,
+    "timestamp": "2025-10-29T12:00:05.123411",
+    "reply_token": "3528c4f4-d0a7-4a74-a510-b5a3945867e3",
+    "sid": "7Ipsizul8RsQOA_JAAAH"
+  },
+  "2062e0c9-9d3c-4f04-bf48-dfaaa4c0d976": {
+    "question": "khva",
+    "answer": null,
+    "timestamp": "2025-10-29T12:00:29.960051",
+    "reply_token": "0c6c0cf9-2c0f-4899-a7fa-e6ce40086042",
+    "sid": "mMYjTEg_4y0E3tN4AAAJ"
+  },
+  "16273674-52b7-4430-a23f-43f28c15ca02": {
+    "question": "khva",
+    "answer": "khva",
+    "timestamp": "2025-10-29T12:01:27.882184",
+    "reply_token": "8b948f72-58d1-4c85-b0e0-fb5666a53f91",
+    "sid": "gxJtB90ZAeu_MHadAAAL"
+  },
+  "f39b921c-3965-4ae3-8ccd-c672ec263f8d": {
+    "question": "hava durumu",
+    "answer": "23 derece",
+    "timestamp": "2025-10-29T16:18:59.299726",
+    "reply_token": "44611104-4635-42e1-9eb9-1196c9439594",
+    "sid": "2kEl8_wXaL33nmfMAAAJ"
+  },
+  "107fa456-0dbd-4d2b-95a4-0e346c6fe898": {
+    "question": "sıcak kahveler",
+    "answer": "espresso",
+    "timestamp": "2025-10-29T16:21:03.545606",
+    "reply_token": "920097d1-cc60-42d2-8053-d29b8ae29d61",
+    "sid": "tVfNDyO_VjwwQg4SAAAL"
+  }
+}

@@ -1,0 +1,741 @@
+[
+  {
+    "sid": "VCs-7nXKQ43-mEWHAAAP",
+    "user_id": "c43e5df1-36d0-412f-80c0-ccef5aaf28c3",
+    "chat_display_id": "202510290008",
+    "user_name": "berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T16:24:15.837433+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T16:24:20.170772+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "siparis_bilgisi",
+        "timestamp": "2025-10-29T16:24:21.673888+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Lütfen sipariş numaranızı veya takip kodunuzu girin.",
+        "timestamp": "2025-10-29T16:24:21.674971+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Böyle bir sipariş yok, lütfen bilgilerinizi kontrol edin.",
+        "timestamp": "2025-10-29T16:24:37.596403+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Siparişinizle ilgili son durum: 'sipariş no:123456\ne posta:berkecan@gmail.com\nisim:berkecan\ndurum:hazırlanıyor'",
+        "timestamp": "2025-10-29T16:24:44.130538+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Başka bir konuda yardımcı olabilir miyim?",
+        "timestamp": "2025-10-29T16:24:44.130538+03:00"
+      },
+      {
+        "sender": "system",
+        "text": "Görüşmek üzere!",
+        "timestamp": "2025-10-29T16:24:48.717635+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false,
+    "chat_type": "Sipariş Bilgisi Akışı"
+  },
+  {
+    "sid": "nvgXc0LTWnQDyFzUAAAN",
+    "user_id": "5d101a0c-7656-43fa-8095-d4fd0b067d55",
+    "chat_display_id": "202510290007",
+    "user_name": "berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T16:22:57.567347+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T16:23:02.054249+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "siparis_bilgisi",
+        "timestamp": "2025-10-29T16:23:03.917457+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Lütfen sipariş numaranızı veya takip kodunuzu girin.",
+        "timestamp": "2025-10-29T16:23:03.917457+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Siparişinizle ilgili son durum: 'sipariş no:123456\ne posta:berkecan@gmail.com\nisim:berkecan\ndurum:hazırlanıyor'",
+        "timestamp": "2025-10-29T16:23:22.511450+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Başka bir konuda yardımcı olabilir miyim?",
+        "timestamp": "2025-10-29T16:23:22.512451+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "bilgi_almak",
+        "timestamp": "2025-10-29T16:24:02.379762+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Tabi ki, hangi konuda bilgi almak istersiniz?",
+        "timestamp": "2025-10-29T16:24:02.379762+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "menü",
+        "timestamp": "2025-10-29T16:24:10.211362+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Tabi ki, işte menümüz:",
+        "timestamp": "2025-10-29T16:24:10.211362+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "sicak_kahveler",
+        "timestamp": "2025-10-29T16:24:12.528430+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Sıcak kahvelerimiz:",
+        "timestamp": "2025-10-29T16:24:12.528430+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "americano",
+        "timestamp": "2025-10-29T16:24:13.382945+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Americano siparişiniz hazırlanıyor. Tutar 90 TL.",
+        "timestamp": "2025-10-29T16:24:13.382945+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false,
+    "chat_type": "Bilgi Almak"
+  },
+  {
+    "sid": "tVfNDyO_VjwwQg4SAAAL",
+    "user_id": "0e977e8b-9930-4ead-847a-0fe7152ca0e8",
+    "chat_display_id": "202510290006",
+    "user_name": "berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T16:20:24.571407+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T16:20:28.857439+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "bilgi_almak",
+        "timestamp": "2025-10-29T16:20:29.777532+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Tabi ki, hangi konuda bilgi almak istersiniz?",
+        "timestamp": "2025-10-29T16:20:29.778533+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "hava durumu",
+        "timestamp": "2025-10-29T16:20:32.379269+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "23 derece",
+        "timestamp": "2025-10-29T16:20:32.380290+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "sıcak kahveler",
+        "timestamp": "2025-10-29T16:21:03.542587+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Üzgünüm, bu soruyu anlayamadım.",
+        "timestamp": "2025-10-29T16:21:26.970581+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "espresso",
+        "timestamp": "2025-10-29T16:22:36.399387+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false,
+    "chat_type": "Bilgi Almak"
+  },
+  {
+    "sid": "2kEl8_wXaL33nmfMAAAJ",
+    "user_id": "6b8fefdb-b04a-4679-b39a-3df44ccfd279",
+    "chat_display_id": "202510290005",
+    "user_name": "berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T16:18:48.123057+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T16:18:52.890956+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "bilgi_almak",
+        "timestamp": "2025-10-29T16:18:54.394658+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Tabi ki, hangi konuda bilgi almak istersiniz?",
+        "timestamp": "2025-10-29T16:18:54.394658+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "hava durumu",
+        "timestamp": "2025-10-29T16:18:59.298726+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Üzgünüm, bu soruyu anlayamadım.",
+        "timestamp": "2025-10-29T16:19:23.385472+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "23 derece",
+        "timestamp": "2025-10-29T16:19:43.125264+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false,
+    "chat_type": "Bilgi Alma Akışı"
+  },
+  {
+    "sid": "0lyMzQpYDNoKmV4QAAAH",
+    "user_id": "ec2cf341-f1d9-4c27-93c4-080601e32a2a",
+    "chat_display_id": "202510290004",
+    "user_name": "berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T16:17:59.407640+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T16:18:03.411239+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "bilgi_almak",
+        "timestamp": "2025-10-29T16:18:12.829090+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Tabi ki, hangi konuda bilgi almak istersiniz?",
+        "timestamp": "2025-10-29T16:18:12.829986+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "kahve",
+        "timestamp": "2025-10-29T16:18:25.032999+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Tabi ki, işte menümüz:",
+        "timestamp": "2025-10-29T16:18:25.032999+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "sicak_kahveler",
+        "timestamp": "2025-10-29T16:18:29.999525+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Sıcak kahvelerimiz:",
+        "timestamp": "2025-10-29T16:18:30.000552+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "americano",
+        "timestamp": "2025-10-29T16:18:32.127158+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Americano siparişiniz hazırlanıyor. Tutar 90 TL.",
+        "timestamp": "2025-10-29T16:18:32.127158+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false,
+    "chat_type": "Bilgi Almak"
+  },
+  {
+    "sid": "Pc6gaD5aDnNTEF1TAAAB",
+    "user_id": "b96f859d-d5a1-4bdf-a70e-327311f7cf2d",
+    "chat_display_id": "202510290001",
+    "user_name": "kullanıcı",
+    "user_email": null,
+    "start_time": "2025-10-29T16:08:03.924393+03:00",
+    "history": [
+      {
+        "sender": "system",
+        "text": "Bir operatör sohbete katıldı.",
+        "timestamp": "2025-10-29T16:16:42.852877+03:00"
+      },
+      {
+        "sender": "system",
+        "text": "Operatör sohbeti sonlandırdı. Yeni bir sohbet başlatmak için sayfayı yenileyebilirsiniz.",
+        "timestamp": "2025-10-29T16:17:06.911454+03:00"
+      }
+    ],
+    "is_admin_joined": true,
+    "admin_sids": [
+      "qqNfu8yzOgFbgltDAAAF"
+    ],
+    "human_request_active": false,
+    "name_set": false,
+    "id_requested_from_chat": false
+  },
+  {
+    "sid": "Clqnpce-55mJltE_AAAV",
+    "user_id": "23b55352-5b9a-4eeb-967c-1bbfe92e262e",
+    "chat_display_id": "202510290011",
+    "user_name": "kullanıcı",
+    "user_email": null,
+    "start_time": "2025-10-29T12:08:17.595513+03:00",
+    "history": [],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": false,
+    "id_requested_from_chat": false
+  },
+  {
+    "sid": "nVHOAjxRYj801PJNAAAT",
+    "user_id": "4182434a-d3eb-48c6-8fe4-bbc75d468f00",
+    "chat_display_id": "202510290010",
+    "user_name": "berkay",
+    "user_email": "berkay@gmail.com",
+    "start_time": "2025-10-29T12:07:58.553379+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T12:08:07.449766+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "siparis_bilgisi",
+        "timestamp": "2025-10-29T12:08:09.558144+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Lütfen sipariş numaranızı veya takip kodunuzu girin.",
+        "timestamp": "2025-10-29T12:08:09.558144+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Böyle bir sipariş yok, lütfen bilgilerinizi kontrol edin.",
+        "timestamp": "2025-10-29T12:08:11.303846+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false,
+    "flow_id": "order_info_flow",
+    "state": "awaiting_order_info",
+    "chat_type": "Sipariş Bilgisi Akışı"
+  },
+  {
+    "sid": "Eza0wcJD9BI80CEqAAAR",
+    "user_id": "20f55426-906f-4487-aadd-2e763988bc42",
+    "chat_display_id": "202510290009",
+    "user_name": "berkay",
+    "user_email": "berkay@gmail.com",
+    "start_time": "2025-10-29T12:07:18.801438+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T12:07:37.889949+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "siparis_bilgisi",
+        "timestamp": "2025-10-29T12:07:39.369348+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Lütfen sipariş numaranızı veya takip kodunuzu girin.",
+        "timestamp": "2025-10-29T12:07:39.369348+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Siparişinizle ilgili son durum: 'sipariş no:12345678\ne posta:berkay@gmail.com\nisim:berkay\ndurum:hazırlanıyor'",
+        "timestamp": "2025-10-29T12:07:46.349538+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Başka bir konuda yardımcı olabilir miyim?",
+        "timestamp": "2025-10-29T12:07:46.349538+03:00"
+      },
+      {
+        "sender": "system",
+        "text": "Görüşmek üzere!",
+        "timestamp": "2025-10-29T12:07:57.136014+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false,
+    "chat_type": "Sipariş Bilgisi Akışı"
+  },
+  {
+    "sid": "M5PC5PKpFdnzBLMhAAAP",
+    "user_id": "8dfa5bd2-7721-41f7-bb7a-c689b8c0927b",
+    "chat_display_id": "202510290008",
+    "user_name": "berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T12:06:58.845040+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T12:07:02.662265+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "siparis_bilgisi",
+        "timestamp": "2025-10-29T12:07:03.626184+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Lütfen sipariş numaranızı veya takip kodunuzu girin.",
+        "timestamp": "2025-10-29T12:07:03.626184+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Siparişinizle ilgili son durum: 'sipariş no:123456\ne posta:berkecan@gmail.com\nisim:berkecan\ndurum:hazırlanıyor'",
+        "timestamp": "2025-10-29T12:07:11.456956+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Başka bir konuda yardımcı olabilir miyim?",
+        "timestamp": "2025-10-29T12:07:11.456956+03:00"
+      },
+      {
+        "sender": "system",
+        "text": "Görüşmek üzere!",
+        "timestamp": "2025-10-29T12:07:16.667796+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false,
+    "chat_type": "Sipariş Bilgisi Akışı"
+  },
+  {
+    "sid": "WJyvTaRvMeGhl5j5AAAN",
+    "user_id": "95e25bc4-d2bc-4342-b41d-52d44d8447b4",
+    "chat_display_id": "202510290007",
+    "user_name": "berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T12:06:43.434513+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T12:06:54.129685+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "bilgi_almak",
+        "timestamp": "2025-10-29T12:06:55.586497+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Tabi ki, hangi konuda bilgi almak istersiniz?",
+        "timestamp": "2025-10-29T12:06:55.586497+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false,
+    "flow_id": "info_request_flow",
+    "state": "awaiting_user_query",
+    "chat_type": "Bilgi Alma Akışı"
+  },
+  {
+    "sid": "gxJtB90ZAeu_MHadAAAL",
+    "user_id": "483eb8da-c42a-485f-b79f-d42eea194541",
+    "chat_display_id": "202510290006",
+    "user_name": "berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T12:01:22.227484+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T12:01:26.041625+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "khva",
+        "timestamp": "2025-10-29T12:01:27.880172+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Üzgünüm, bu soruyu anlayamadım.",
+        "timestamp": "2025-10-29T12:01:30.128220+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "khva",
+        "timestamp": "2025-10-29T12:02:39.965466+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false
+  },
+  {
+    "sid": "mMYjTEg_4y0E3tN4AAAJ",
+    "user_id": "ebc28854-7b6b-4936-bda3-c6b07b40ac60",
+    "chat_display_id": "202510290005",
+    "user_name": "berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T12:00:21.635321+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T12:00:27.226628+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "khva",
+        "timestamp": "2025-10-29T12:00:29.956401+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Üzgünüm, bu soruyu anlayamadım.",
+        "timestamp": "2025-10-29T12:00:52.076551+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false
+  },
+  {
+    "sid": "7Ipsizul8RsQOA_JAAAH",
+    "user_id": "82da597c-2fc4-461f-bb5b-a2a18abd1501",
+    "chat_display_id": "202510290004",
+    "user_name": "berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T11:59:58.548565+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T12:00:02.801833+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "hava",
+        "timestamp": "2025-10-29T12:00:05.118997+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false
+  },
+  {
+    "sid": "T980ZPGBTQ7mNM_GAAAF",
+    "user_id": "85a95efb-3ec2-45c0-90b7-c995d9cf9b87",
+    "chat_display_id": "202510290003",
+    "user_name": "berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T11:59:25.460119+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T11:59:30.033014+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "bugün hava nasıl",
+        "timestamp": "2025-10-29T11:59:36.785718+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false
+  },
+  {
+    "sid": "yDHRKMCTeVyrUUVVAAAB",
+    "user_id": "62a23814-8865-4eee-8edf-fd964277bc0c",
+    "chat_display_id": "202510290001",
+    "user_name": "Berkecan",
+    "user_email": "berkecan@gmail.com",
+    "start_time": "2025-10-29T11:55:00.486473+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T11:56:43.794300+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "merhaba",
+        "timestamp": "2025-10-29T11:56:47.909620+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Merhaba, nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-29T11:56:47.909620+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "khave",
+        "timestamp": "2025-10-29T11:56:52.657016+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Üzgünüm, bu soruyu anlayamadım.",
+        "timestamp": "2025-10-29T11:56:52.663047+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "kahve",
+        "timestamp": "2025-10-29T11:57:00.560047+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Tabi ki, işte menümüz:",
+        "timestamp": "2025-10-29T11:57:00.561064+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "sicak_kahveler",
+        "timestamp": "2025-10-29T11:57:02.114523+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Sıcak kahvelerimiz:",
+        "timestamp": "2025-10-29T11:57:02.114523+03:00"
+      },
+      {
+        "sender": "user",
+        "text": "filtre_kahve",
+        "timestamp": "2025-10-29T11:57:03.070513+03:00"
+      },
+      {
+        "sender": "bot",
+        "text": "Filtre Kahve siparişiniz hazırlanıyor. Tutar 80 TL.",
+        "timestamp": "2025-10-29T11:57:03.070513+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": true,
+    "id_requested_from_chat": false,
+    "chat_type": "Bilgi Almak"
+  },
+  {
+    "sid": "sSURMP6IgeDly6cBAAAB",
+    "user_id": "c760c263-fb40-4147-bae1-5ab536370f7c",
+    "chat_display_id": "202508240001",
+    "user_name": "kullanıcı",
+    "start_time": "2025-08-24T17:35:16.161941+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-08-24T17:35:16.167911+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": false
+  },
+  {
+    "sid": "EZ8zMFb7B9ZkSlSWAAAB",
+    "user_id": "d6e8c5b2-b2a0-4579-b8c7-31b490535748",
+    "chat_display_id": "202508240001",
+    "user_name": "kullanıcı",
+    "start_time": "2025-08-24T17:17:25.368548+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-08-24T17:17:25.368548+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": false
+  },
+  {
+    "sid": "9-F82fty3euA2nn0AAAD",
+    "user_id": "f1fe4ee7-fd55-41da-924b-8859256227da",
+    "chat_display_id": "202508240002",
+    "user_name": "kullanıcı",
+    "start_time": "2025-08-24T17:18:02.736147+03:00",
+    "history": [
+      {
+        "sender": "bot",
+        "text": "Merhaba! Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-08-24T17:18:02.740466+03:00"
+      }
+    ],
+    "is_admin_joined": false,
+    "admin_sids": [],
+    "human_request_active": false,
+    "name_set": false
+  }
+]

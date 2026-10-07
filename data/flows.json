@@ -1,0 +1,34 @@
+{
+  "order_info_flow": {
+    "name": "Sipariş Bilgisi Akışı",
+    "initial_prompt_responses": [
+      "Lütfen sipariş numaranızı veya takip kodunuzu girin."
+    ],
+    "state_to_set": "awaiting_order_info",
+    "reply_handler": {
+      "type": "telegram_order_lookup",
+      "success_follow_up": {
+        "responses": [
+          "Başka bir konuda yardımcı olabilir miyim?"
+        ],
+        "bubbles": [
+          {
+            "text": "Bilgi Almak",
+            "value": "bilgi_almak"
+          },
+          {
+            "text": "Sohbeti Kapat",
+            "value": "close_chat"
+          }
+        ]
+      }
+    }
+  },
+  "info_request_flow": {
+    "name": "Bilgi Alma Akışı",
+    "initial_prompt_responses": [
+      "Tabi ki, hangi konuda bilgi almak istersiniz?"
+    ],
+    "state_to_set": "awaiting_user_query"
+  }
+}

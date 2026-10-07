@@ -1,0 +1,59 @@
+{
+  "pre_chat": {
+    "enabled": true,
+    "fields": {
+      "name": true,
+      "email": true
+    }
+  },
+  "theme": {
+    "primary_color": "#4F46E5",
+    "font": "Inter"
+  },
+  "canned_responses": {
+    "welcome": "Merhaba! Size nasıl yardımcı olabilirim?",
+    "fallback": "Üzgünüm, bu soruyu anlayamadım."
+  },
+  "survey": {
+    "enabled": false,
+    "questions": [
+      "Yardımcı olabildik mi?",
+      "Deneyiminizi 1-5 arasında nasıl puanlarsınız?"
+    ]
+  },
+  "connections": {
+    "email": {
+      "enabled": true,
+      "imap_configured": true,
+      "smtp_configured": true,
+      "imap_host": "imap.gmail.com",
+      "imap_user": "cbv2048@gmail.com",
+      "imap_password": "gAAAAABpAdfVJPnPIt_JjGdgirQ5BsUc8acvGhIdsasV3nS4ipdCvEaUj2BrfaNu9Rba2zUfhNT4GMlnkognincdGMSfyFj3Rh0XvC8d6wR7vdVwL0vHbhE=",
+      "smtp_host": "smtp.gmail.com",
+      "smtp_port": 587,
+      "smtp_user": "cbv2048@gmail.com",
+      "smtp_password": "gAAAAABpAdfVdpLdA1nLwH70OKHaT872TovU7e6dV3PgCgue4XzWMJ6I-RQtOiQPt4RrQeRgFZ0vNsOlRya2gmbgDlnIXRrs331eXIUcW1kV_03SDxcOmag=",
+      "smtp_sender": "cbv2048@gmail.com",
+      "notification_recipient": "cbv2048@gmail.com"
+    },
+    "telegram": {
+      "enabled": true,
+      "bot_token": "gAAAAABpAdj4-iJ9nSPMRlts2OC9yUBSgTRjS4XMEs_6XU0UBEztkI7NAxFX9mmNaLWn7BsSaRycjxEhgmSuLdQ_akO7FZwKNt5QhCi0Rv9cP5rALMh2IKJo6rzCu6Y_STYuU4peSqHr",
+      "chat_id": "-4906260350",
+      "initial_message": "merhaba",
+      "buttons": [
+        {
+          "label": "sipariş bilgisi",
+          "value": "sipariş_bilgisi"
+        },
+        {
+          "label": "bilgi almak",
+          "value": "bilgi_almak"
+        }
+      ],
+      "order_info_request": "Lütfen sipariş numaranızı veya siparişinizle ilgili bir anahtar kelime girin.",
+      "info_request_confirmation": "Elbette, size nasıl yardımcı olabilirim? Lütfen sorunuzu yazın.",
+      "telegram_service_unavailable": "Üzgünüz, sipariş sorgulama servisi şu anda aktif değil."
+    }
+  }
+}

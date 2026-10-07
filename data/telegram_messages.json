@@ -1,0 +1,62 @@
+[
+    {
+        "message_id": 81,
+        "from": {
+            "id": 1281222316,
+            "is_bot": false,
+            "first_name": "Berkecan",
+            "language_code": "tr"
+        },
+        "chat": {
+            "id": -4906260350,
+            "title": "bot",
+            "type": "group",
+            "all_members_are_administrators": true,
+            "accepted_gift_types": {
+                "unlimited_gifts": false,
+                "limited_gifts": false,
+                "unique_gifts": false,
+                "premium_subscription": false
+            }
+        },
+        "date": 1761728786,
+        "text": "sipariş no:123456\ne posta:berkecan@gmail.com\nisim:berkecan\ndurum:hazırlanıyor",
+        "entities": [
+            {
+                "offset": 20,
+                "length": 24,
+                "type": "url"
+            }
+        ]
+    },
+    {
+        "message_id": 82,
+        "from": {
+            "id": 1281222316,
+            "is_bot": false,
+            "first_name": "Berkecan",
+            "language_code": "tr"
+        },
+        "chat": {
+            "id": -4906260350,
+            "title": "bot",
+            "type": "group",
+            "all_members_are_administrators": true,
+            "accepted_gift_types": {
+                "unlimited_gifts": false,
+                "limited_gifts": false,
+                "unique_gifts": false,
+                "premium_subscription": false
+            }
+        },
+        "date": 1761728792,
+        "text": "sipariş no:12345678\ne posta:berkay@gmail.com\nisim:berkay\ndurum:hazırlanıyor",
+        "entities": [
+            {
+                "offset": 22,
+                "length": 22,
+                "type": "url"
+            }
+        ]
+    }
+]

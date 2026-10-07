@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <style>
+    /* 1. AYDINLIK MOD DÜZELTMELERİ */
+    /* !important, diğer tüm çakışan stilleri ezmesini sağlar. */
+    html:not(.dark) #chat-history,
+    html:not(.dark) #chat-window {
+        background-color: #ffffff !important;
+    }
+
+    html:not(.dark) .chat-list-item:hover {
+        background-color: #ffffff !important; 
+    }
+
+    /* 2. KARANLIK MOD TUTARLILIK DÜZELTMELERİ */
+    html.dark #chat-history,
+    html.dark #chat-window {
+        background-color: #1f2937 !important; 
+    }
+
+    html.dark .chat-list-item:hover {
+        background-color: #4b5563 !important; 
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Paneli</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #f3f4f6; --text-light: #1f2937; --card-bg-light: #ffffff; --border-light: #e5e7eb;
+            --bg-dark: #1f2937; --text-dark: #f9fafb; --card-bg-dark: #374151; --border-dark: #4b5563;
+            --link-hover-bg-light: #eef2ff; --link-hover-bg-dark: #4338ca;
+            --active-link-bg: #4f46e5; --active-link-text: #ffffff;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: var(--text-light); transition: background-color 0.3s, color 0.3s; }
+        .dark body { background-color: var(--bg-dark); color: var(--text-dark); }
+        .toast { position: fixed; bottom: 20px; right: 20px; padding: 1rem 1.5rem; border-radius: 0.5rem; color: white; z-index: 2100; opacity: 0; transform: translateY(20px); transition: all 0.3s ease-in-out; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background-color: #28a745; }
+        .toast.error { background-color: #dc3545; }
+        .nav-link { display: block; padding: 0.75rem 1.25rem; border-radius: 0.5rem; transition: background-color 0.2s; font-weight: 500; }
+        .nav-link.active { background-color: var(--active-link-bg); color: var(--active-link-text); }
+        .nav-link:not(.active):hover { background-color: var(--link-hover-bg-light); }
+        .dark .nav-link:not(.active):hover { background-color: var(--link-hover-bg-dark); }
+        .hidden { display: none; }
+        .sidebar-collapsed .nav-link-text, .sidebar-collapsed .yonetim-paneli-text, .sidebar-collapsed .sidebar-footer-text { display: none; }
+        .sidebar-collapsed .nav-link, .sidebar-collapsed .sidebar-footer-button {
+            justify-content: center;
+            padding-left: 0.375rem; /* DEĞİŞİKLİK: Daraltılmış menü için yatay dolguyu azalt */
+            padding-right: 0.375rem; /* DEĞİŞİKLİK: Daraltılmış menü için yatay dolguyu azalt */
+        }
+        .sidebar-collapsed .nav-link svg, .sidebar-collapsed .sidebar-footer-button svg { margin-right: 0; }
+        .sidebar-collapsed #sidebar { width: 4rem; }
+        .sidebar-collapsed #main-content { margin-left: 4rem; }
+        #sidebar { transition: width 0.3s ease; background-color: var(--card-bg-light); border-right: 1px solid var(--border-light); }
+        .dark #sidebar { background-color: var(--card-bg-dark); border-right-color: var(--border-dark); }
+        #main-content { transition: margin-left 0.3s ease; margin-left: 16rem; }
+        .nav-link, .sidebar-footer-button { display: flex; align-items: center; }
+        .nav-link svg, .sidebar-footer-button svg { margin-right: 0.75rem; }
+        .card { background-color: var(--card-bg-light); color: var(--text-light); }
+        .dark .card { background-color: var(--card-bg-dark); color: var(--text-dark); }
+        h2, h3, #login-form label, #settings-page .card label { color: var(--text-light); }
+        .dark h2, .dark h3, .dark #login-form label, .dark #settings-page .card label { color: var(--text-dark); }
+        input[type="text"], input[type="password"], input[type="email"], textarea { background-color: #f9fafb; border-color: #d1d5db; }
+        .dark input[type="text"], .dark input[type="password"], .dark input[type="email"], .dark textarea { background-color: #4b5563; border-color: #6b7280; color: var(--text-dark); }
+        .notification-badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 20px;
+            height: 20px;
+            background-color: #ef4444; /* red-500 */
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid var(--card-bg-light);
+        }
+        .dark .notification-badge {
+             border: 2px solid var(--card-bg-dark);
+        }
+        .nav-link {
+            position: relative;
+        }
+        #page-tooltip {
+            display: none;
+            position: absolute;
+            padding: 8px 12px;
+            background-color: #1f2937; /* dark:bg-gray-800 */
+            color: #f9fafb; /* dark:text-gray-50 */
+            border-radius: 6px;
+            font-size: 14px;
+            z-index: 2200; /* Ensure it's on top of other elements */
+            pointer-events: none; /* Prevent tooltip from interfering with mouse events */
+            white-space: pre-wrap; /* Allow multiline content */
+            border: 1px solid #4b5563; /* dark:border-gray-600 */
+        }
+        /* Toggle Switch */
+        input.sr-only:checked ~ .dot {
+            transform: translateX(1.5rem);
+        }
+        input.sr-only:checked ~ .block {
+            background-color: #60A5FA; /* blue-400 */
+        }
+        .dark input.sr-only:checked ~ .block {
+            background-color: #3B82F6; /* blue-500 */
+        }
+        select, input[type="number"] {
+            color: #000000;
+        }
+        .dark select, .dark input[type="number"] {
+            color: #f9fafb;
+            background-color: #4b5563;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <div id="page-tooltip"></div>
+    {% if not current_user.is_authenticated %}
+    <div id="login-view" class="flex min-h-screen items-center justify-center">
+        <div class="w-full max-w-md p-8 space-y-6 card rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-center">Yönetici Girişi</h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <form id="login-form" method="POST" action="{{ url_for('main.admin_login') }}" class="space-y-6">
+                <div>
+                    <label for="email" class="text-sm font-medium">E-posta</label>
+                    <input id="email" name="email" type="email" required value="admin@example.com" class="mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for="password" class="text-sm font-medium">Şifre</label>
+                    <input id="password" name="password" type="password" required class="mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full flex justify-center py-3 px-4 border rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">Giriş Yap</button>
+            </form>
+            <div class="text-center">
+                <a href="#" id="show-signup-link" class="text-sm font-medium text-blue-600 hover:underline">Hesabınız yok mu? Kayıt Olun</a>
+            </div>
+        </div>
+    </div>
+    <div id="signup-view" class="hidden flex min-h-screen items-center justify-center">
+        <div class="w-full max-w-md p-8 space-y-6 card rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-center">Yönetici Kaydı</h2>
+            <form id="signup-form" method="POST" action="{{ url_for('main.signup') }}" class="space-y-6">
+                <div>
+                    <label for="signup-email" class="text-sm font-medium">E-posta</label>
+                    <input id="signup-email" name="email" type="email" required class="mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for="signup-password" class="text-sm font-medium">Şifre</label>
+                    <input id="signup-password" name="password" type="password" required class="mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button type="submit" class="w-full flex justify-center py-3 px-4 border rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">Kayıt Ol</button>
+            </form>
+            <div class="text-center">
+                <a href="#" id="show-login-link" class="text-sm font-medium text-blue-600 hover:underline">Zaten hesabınız var mı? Giriş Yapın</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div id="admin-view">
+        <div class="flex h-screen">
+            <aside id="sidebar" class="w-64 shadow-md flex flex-col">
+                <div class="flex items-center justify-between p-4 border-b">
+                    <span class="text-2xl font-bold text-indigo-600 yonetim-paneli-text">Yönetim Paneli</span>
+                    <div class="flex items-center">
+                        <button id="theme-toggle" class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700">
+                            <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                            <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                        </button>
+                        <button id="sidebar-toggle" class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 ml-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                        </button>
+                    </div>
+                </div>
+                <nav class="flex-1 px-4 space-y-2 py-4">
+                    <a href="#" id="nav-dashboard" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg><span class="nav-link-text">Kontrol Paneli</span></a>
+                    <a href="#" id="nav-users" class="nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0115 14h1a1 1 0 011 1v2a1 1 0 01-1 1h-2.07zM9 12a4 4 0 00-4 4v1a1 1 0 001 1h6a1 1 0 001-1v-1a4 4 0 00-4-4H9z" />
+                        </svg>
+                        <span class="nav-link-text">Kullanıcılar</span>
+                    </a>
+                    <a href="#" id="nav-unanswered" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg><span class="nav-link-text">Cevaplanmamış Sorular</span></a>
+                    <a href="#" id="nav-answered" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg><span class="nav-link-text">Cevaplanmış Sorular</span></a>
+                    <a href="#" id="nav-chats" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm14 1a1 1 0 11-2 0 1 1 0 012 0zM5 7a1 1 0 100 2h8a1 1 0 100-2H5z" /></svg><span class="nav-link-text">Sohbet Ekranları</span></a>
+                    <a href="#" id="nav-library" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h2a2 2 0 002-2V4a2 2 0 00-2-2H9z" /><path d="M4 12a2 2 0 012-2h10a2 2 0 110 4H6a2 2 0 01-2-2z" /></svg><span class="nav-link-text">Kütüphane</span></a>
+                    <a href="#" id="nav-notifications" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" /></svg><span class="nav-link-text">Bildirimler</span></a>
+                    <a href="#" id="nav-archives" class="nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1z" />
+                            <path fill-rule="evenodd" d="M5 4a1 1 0 011-1h8a1 1 0 011 1v12a1 1 0 01-1 1H6a1 1 0 01-1-1V4zm2 2a1 1 0 100 2h4a1 1 0 100-2H7z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="nav-link-text">Arşivler</span>
+                    </a>
+                    <a href="#" id="nav-settings" class="nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.532 1.532 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.532 1.532 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="nav-link-text">Ayarlar</span>
+                    </a>
+                    <a href="#" id="nav-connections" class="nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 3a1 1 0 011 1v1.586l1.707 1.707a1 1 0 01-1.414 1.414L10 6.414V3a1 1 0 01-1-1z" />
+                            <path d="M10 3a1 1 0 01-1-1v1.586l-1.707 1.707a1 1 0 011.414 1.414L10 6.414V3a1 1 0 011-1z" />
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v1.586l1.707 1.707a1 1 0 01-1.414 1.414L10 6.414V3z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd" d="M3.293 7.293a1 1 0 011.414 0L6 8.586V11a1 1 0 112 0v-2.414l1.293-1.293a1 1 0 111.414 1.414L9 10.414V17a1 1 0 11-2 0v-6.586l-1.293 1.293a1 1 0 01-1.414-1.414z" clip-rule="evenodd" />
+                            <path d="M15 3a1 1 0 011 1v1.586l1.707 1.707a1 1 0 01-1.414 1.414L15 6.414V3z" />
+                            <path d="M15 3a1 1 0 01-1-1v1.586l-1.707 1.707a1 1 0 011.414 1.414L15 6.414V3z" />
+                        </svg>
+                        <span class="nav-link-text">Bağlantılar</span>
+                    </a>
+                    <a href="#" id="nav-flows" class="nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="nav-link-text">Akışlar</span>
+                    </a>
+                </nav>
+                <div class="p-4 border-t">
+                    <a href="/" class="sidebar-footer-button w-full px-4 py-2 mb-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" /><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" /></svg><span class="sidebar-footer-text">Chatbot'a Git</span></a>
+                    <button id="logout-button" class="sidebar-footer-button w-full px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" /></svg><span class="sidebar-footer-text">Çıkış Yap</span></button>
+                </div>
+            </aside>
+            
+            <main id="main-content" class="flex-1 px-4 pt-2 pb-4 overflow-y-auto">
+                <section id="dashboard-page" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4">Kontrol Paneli</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="card p-4 rounded-lg shadow"><h3 class="text-sm font-medium">Kütüphanedeki Bilgi</h3><p id="stat-library" class="text-2xl font-bold text-indigo-600 mt-1">0</p></div>
+                        <div class="card p-4 rounded-lg shadow"><h3 class="text-sm font-medium">Cevaplanmamış Sorular</h3><p id="stat-unanswered" class="text-2xl font-bold text-red-500 mt-1">0</p></div>
+                        <div class="card p-4 rounded-lg shadow"><h3 class="text-sm font-medium">Cevaplanmış (Eğitilecek)</h3><p id="stat-answered" class="text-2xl font-bold text-yellow-500 mt-1">0</p></div>
+                    </div>
+                    
+                    <div class="card p-4 rounded-lg shadow">
+                        <h3 class="text-md font-semibold mb-3">Veri Dağılımı</h3>
+                        <div class="relative mx-auto w-full max-w-md">
+                           <canvas id="stats-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 card p-4 rounded-lg shadow">
+                        <h3 class="text-md font-semibold mb-3">Sistem Araçları</h3>
+                        <div class="flex items-center space-x-3">
+                            <button id="test-email-btn" class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700">Test E-postası Gönder</button>
+                            <p id="test-email-status" class="text-sm text-gray-500"></p>
+                        </div>
+                    </div>
+                </section>
+                <section id="users-page" class="hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-3xl font-bold">Kullanıcı Yönetimi</h2>
+                        {% if user_permissions.role == 'group_admin' %}
+                        <button id="add-user-btn" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">Yeni Kullanıcı Ekle</button>
+                        {% endif %}
+                    </div>
+                    <div class="card rounded-lg shadow overflow-hidden">
+                        <table class="min-w-full">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">E-posta</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Rol</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Etiketler</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Oluşturulma Tarihi</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Eylemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-list" class="divide-y divide-gray-200 dark:divide-gray-600">
+                                <!-- User rows will be inserted here by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section id="unanswered-page" class="hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-3xl font-bold">Cevaplanmamış Sorular</h2>
+                        <button id="delete-selected-unanswered-btn" class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg disabled:bg-gray-400" disabled>Seçilenleri Sil</button>
+                    </div>
+                    <div class="mb-4">
+                        <input type="text" id="search-unanswered" class="w-full px-4 py-2 border rounded-lg" placeholder="Sorular içinde ara...">
+                    </div>
+                    <div class="space-y-4">
+                        <div class="card flex items-center p-2 rounded-md">
+                            <input type="checkbox" id="select-all-unanswered" class="h-4 w-4 rounded border-gray-300">
+                            <label for="select-all-unanswered" class="ml-3 block text-sm">Tümünü Seç</label>
+                        </div>
+                        <div id="questions-list" class="space-y-4">
+                            <p class="text-center text-gray-500 py-4">Yükleniyor...</p>
+                        </div>
+                    </div>
+                    <div id="pagination-unanswered" class="mt-4"></div>
+                </section>
+                <section id="answered-page" class="hidden">
+                    <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                        <h2 class="text-3xl font-bold">Cevaplanmış Sorular</h2>
+                        <div class="flex gap-2">
+                            <button id="train-group-btn" class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg disabled:bg-gray-400" disabled>Grup Olarak Ekle</button>
+                            <button id="train-selected-btn" class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg disabled:bg-gray-400" disabled>Kütüphaneye Ekle</button>
+                            <button id="delete-selected-answered-btn" class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg disabled:bg-gray-400" disabled>Seçilenleri Sil</button>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <input type="text" id="search-answered" class="w-full px-4 py-2 border rounded-lg" placeholder="Sorular ve cevaplar içinde ara...">
+                    </div>
+                    <div class="space-y-4">
+                        <div class="card flex items-center p-2 rounded-md">
+                            <input type="checkbox" id="select-all-answered" class="h-4 w-4 rounded border-gray-300">
+                            <label for="select-all-answered" class="ml-3 block text-sm">Tümünü Seç</label>
+                        </div>
+                        <div id="answered-list" class="space-y-4">
+                            <p class="text-center text-gray-500 py-4">Yükleniyor...</p>
+                        </div>
+                    </div>
+                    <div id="pagination-answered" class="mt-4"></div>
+                </section>
+                <section id="library-page" class="hidden">
+                    <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                        <h2 class="text-3xl font-bold">Kütüphane</h2>
+                        <div class="flex gap-2">
+                            <button id="add-new-group-btn" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">Yeni Grup Ekle</button>
+                            <button id="regroup-selected-library-btn" class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg disabled:bg-gray-400" disabled>Seçilenleri Yeniden Grupla</button>
+                            <button id="delete-selected-library-btn" class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg disabled:bg-gray-400" disabled>Seçilenleri Sil</button>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <input type="text" id="search-library" class="w-full px-4 py-2 border rounded-lg" placeholder="Niyetler ve cevaplar içinde ara...">
+                    </div>
+                    <div class="space-y-4">
+                        <div class="card flex items-center p-2 rounded-md">
+                            <input type="checkbox" id="select-all-library" class="h-4 w-4 rounded border-gray-300">
+                            <label for="select-all-library" class="ml-3 block text-sm">Tümünü Seç</label>
+                        </div>
+                        <div id="library-list" class="space-y-4">
+                            <p class="text-center text-gray-500 py-4">Yükleniyor...</p>
+                        </div>
+                    </div>
+                    <div id="pagination-library" class="mt-4"></div>
+                </section>
+                <section id="notifications-page" class="hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-3xl font-bold">Bildirimler</h2>
+                        <button id="delete-selected-notifications-btn" class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg disabled:bg-gray-400" disabled>Seçilenleri Sil</button>
+                    </div>
+                    <div class="mb-4">
+                        <input type="text" id="search-notifications" class="w-full px-4 py-2 border rounded-lg" placeholder="Bildirimler içinde ara...">
+                    </div>
+                    <div class="space-y-4">
+                        <div class="card flex items-center p-2 rounded-md">
+                            <input type="checkbox" id="select-all-notifications" class="h-4 w-4 rounded border-gray-300">
+                            <label for="select-all-notifications" class="ml-3 block text-sm">Tümünü Seç</label>
+                        </div>
+                        <div id="notifications-list" class="space-y-4">
+                            <p class="text-center text-gray-500 py-4">Yükleniyor...</p>
+                        </div>
+                    </div>
+                    <div id="pagination-notifications" class="mt-4"></div>
+                </section>
+                <section id="chats-page" class="hidden">
+                    <h2 class="text-3xl font-bold mb-4">Aktif Sohbetler</h2>
+                    <div class="flex gap-6 h-[calc(100vh-150px)]">
+                        <div class="w-1/3 border-r pr-4 overflow-y-auto">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-xl font-semibold">Sohbetler</h3>
+                            </div>
+                            <div id="active-chats-list" class="space-y-2">
+                                <p class="text-gray-500">Aktif sohbet bulunmuyor.</p>
+                            </div>
+                        </div>
+                        <div class="w-2/3 flex flex-col">
+                            <div id="chat-window" class="hidden h-full flex flex-col">
+                                <div class="flex justify-between items-center mb-3 pb-3 border-b">
+                                    <h3 class="text-xl font-semibold">Sohbet: <span id="chat-user-id"></span></h3>
+                                    <div class="flex gap-2">
+                                        <button id="leave-chat-btn" class="px-3 py-1 text-sm font-medium text-white bg-yellow-600 rounded-lg hover:bg-yellow-700">Bota Aktar</button>
+                                        <button id="close-chat-btn" class="px-3 py-1 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700">Sohbeti Kapat</button>
+                                    </div>
+                                </div>
+                                <div id="chat-history" class="flex-1 overflow-y-auto p-4 bg-white dark:bg-gray-800 rounded-lg mb-4">
+                                    </div>
+                                <div class="flex gap-2">
+                                    <input type="text" id="admin-chat-input" class="w-full px-4 py-2 border rounded-lg" placeholder="Cevabınızı yazın...">
+                                    <button id="admin-send-btn" class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">Gönder</button>
+                                </div>
+                            </div>
+                            <div id="no-chat-selected" class="flex items-center justify-center h-full">
+                                <p class="text-gray-500">Görüntülemek için bir sohbet seçin.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="archives-page" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4">Arşivler</h2>
+                    <div class="flex space-x-4 border-b mb-4">
+                        <button class="py-2 px-4 text-lg font-medium text-gray-500 hover:text-gray-700 focus:outline-none" data-tab="chat-archive">Sohbet Arşivi</button>
+                        <button class="py-2 px-4 text-lg font-medium text-gray-500 hover:text-gray-700 focus:outline-none" data-tab="prechat-archive">Pre-chat Arşivi</button>
+                        <button class="py-2 px-4 text-lg font-medium text-gray-500 hover:text-gray-700 focus:outline-none" data-tab="survey-archive">Anket Arşivi</button>
+                    </div>
+                    <div id="archives-tab-content">
+                        <div id="chat-archive-tab" class="hidden">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-3xl font-bold">Sohbet Arşivi</h2>
+                                <button id="delete-selected-archive-btn" class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg disabled:bg-gray-400" disabled>Seçilenleri Sil</button>
+                            </div>
+                            <div class="mb-4">
+                                <input type="text" id="search-archive" class="w-full px-4 py-2 border rounded-lg" placeholder="Arşivde ara (Sohbet ID, Kullanıcı ID, Mesaj)...">
+                            </div>
+                            <div class="space-y-4">
+                                <div class="card flex items-center p-2 rounded-md">
+                                    <input type="checkbox" id="select-all-archive" class="h-4 w-4 rounded border-gray-300">
+                                    <label for="select-all-archive" class="ml-3 block text-sm">Tümünü Seç</label>
+                                </div>
+                                <div id="archive-list" class="space-y-4">
+                                <p class="text-center text-gray-500 py-4">Yükleniyor...</p>
+                                </div>
+                                <div id="pagination-archive" class="mt-4"></div>
+                            </div>
+                        </div>
+                        <div id="prechat-archive-tab" class="hidden">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-3xl font-bold">Pre-chat Arşivi</h2>
+                                <button id="delete-selected-prechat-btn" class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg disabled:bg-gray-400" disabled>Seçilenleri Sil</button>
+                            </div>
+                            <div class="mb-4">
+                                <input type="text" id="search-prechat-archive" class="w-full px-4 py-2 border rounded-lg" placeholder="Arşivde ara...">
+                            </div>
+                            <div class="space-y-4">
+                                <div class="card flex items-center p-2 rounded-md">
+                                    <input type="checkbox" id="select-all-prechat-archive" class="h-4 w-4 rounded border-gray-300">
+                                    <label for="select-all-prechat-archive" class="ml-3 block text-sm">Tümünü Seç</label>
+                                </div>
+                                <div id="prechat-archive-list" class="space-y-4">
+                                    <p class="text-center text-gray-500 py-4">Yükleniyor...</p>
+                                </div>
+                                <div id="pagination-prechat-archive" class="mt-4"></div>
+                            </div>
+                        </div>
+                        <div id="survey-archive-tab" class="hidden">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-3xl font-bold">Anket Arşivi</h2>
+                                <button id="delete-selected-survey-btn" class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg disabled:bg-gray-400" disabled>Seçilenleri Sil</button>
+                            </div>
+                            <div class="mb-4">
+                                <input type="text" id="search-survey-archive" class="w-full px-4 py-2 border rounded-lg" placeholder="Arşivde ara...">
+                            </div>
+                            <div class="space-y-4">
+                                <div class="card flex items-center p-2 rounded-md">
+                                    <input type="checkbox" id="select-all-survey-archive" class="h-4 w-4 rounded border-gray-300">
+                                    <label for="select-all-survey-archive" class="ml-3 block text-sm">Tümünü Seç</label>
+                                </div>
+                                <div id="survey-archive-list" class="space-y-4">
+                                    <p class="text-center text-gray-500 py-4">Yükleniyor...</p>
+                                </div>
+                                <div id="pagination-survey-archive" class="mt-4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="flows-page" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4">Akış Yönetimi</h2>
+                    <div class="flex justify-end mb-4">
+                        <button id="add-new-flow-btn" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">Yeni Akış Ekle</button>
+                    </div>
+                    <div id="flows-list" class="space-y-4">
+                        <p class="text-center text-gray-500 py-4">Yükleniyor...</p>
+                    </div>
+                </section>
+                <section id="connections-page" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4">Bağlantılar</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+                        <!-- Email Settings -->
+                        <div class="card p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-semibold mb-6 border-b pb-4">E-posta Ayarları</h3>
+                            <form id="email-settings-form">
+                                <div class="flex items-center justify-between mb-6">
+                                    <span class="text-lg font-medium">E-posta Servisini Aktif Et</span>
+                                    <label for="email-enabled" class="flex items-center cursor-pointer">
+                                        <div class="relative">
+                                            <input type="checkbox" id="email-enabled" name="enabled" class="sr-only">
+                                            <div class="block bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full"></div>
+                                            <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="imap-host" class="block text-sm font-medium">IMAP Host</label>
+                                        <input type="text" id="imap-host" name="imap_host" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="imap-user" class="block text-sm font-medium">IMAP Kullanıcı Adı</label>
+                                        <input type="text" id="imap-user" name="imap_user" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="imap-password" class="block text-sm font-medium">IMAP Şifre</label>
+                                        <input type="password" id="imap-password" name="imap_password" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="smtp-host" class="block text-sm font-medium">SMTP Host</label>
+                                        <input type="text" id="smtp-host" name="smtp_host" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="smtp-port" class="block text-sm font-medium">SMTP Port</label>
+                                        <input type="number" id="smtp-port" name="smtp_port" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="smtp-user" class="block text-sm font-medium">SMTP Kullanıcı Adı</label>
+                                        <input type="text" id="smtp-user" name="smtp_user" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="smtp-password" class="block text-sm font-medium">SMTP Şifre</label>
+                                        <input type="password" id="smtp-password" name="smtp_password" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="smtp-sender" class="block text-sm font-medium">SMTP Gönderen Adresi</label>
+                                        <input type="text" id="smtp-sender" name="smtp_sender" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="notification-recipient" class="block text-sm font-medium">Bildirim Alıcı Adresi</label>
+                                        <input type="text" id="notification-recipient" name="notification_recipient" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                                    </div>
+                                </div>
+                                <div class="mt-8 pt-5 border-t">
+                                    <button type="button" id="save-email-settings" class="px-6 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">E-posta Ayarlarını Kaydet</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Telegram Settings -->
+                        <div class="card p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-semibold mb-6 border-b pb-4">Telegram Ayarları</h3>
+                            <form id="telegram-settings-form">
+                                <div class="flex items-center justify-between mb-6">
+                                    <span class="text-lg font-medium">Telegram Servisini Aktif Et</span>
+                                    <label for="telegram-enabled" class="flex items-center cursor-pointer">
+                                        <div class="relative">
+                                            <input type="checkbox" id="telegram-enabled" name="enabled" class="sr-only">
+                                            <div class="block bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full"></div>
+                                            <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="bot-token" class="block text-sm font-medium">Bot Token</label>
+                                        <input type="password" id="bot-token" name="bot_token" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="chat-id" class="block text-sm font-medium">Chat ID</label>
+                                        <input type="text" id="chat-id" name="chat_id" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                                    </div>
+                                </div>
+
+                                <div id="telegram-initial-message-settings" class="hidden mt-6 pt-6 border-t">
+                                    <h4 class="text-lg font-semibold mb-4">Başlangıç Mesajı ve Menü Ayarları</h4>
+                                    <p class="text-sm text-gray-500 mb-4">Bu ayarlar yalnızca bir kullanıcı bot ile ilk kez sohbet başlattığında geçerlidir.</p>
+
+                                    <div class="mb-6">
+                                        <label for="telegram-initial-message" class="block text-sm font-medium">Başlangıç Mesajı</label>
+                                        <textarea id="telegram-initial-message" name="initial_message" rows="3" class="w-full mt-1 px-3 py-2 border rounded-lg" placeholder="Kullanıcıya gösterilecek ilk mesaj..."></textarea>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">Menü Butonları</label>
+                                        <div id="telegram-buttons-container" class="space-y-3">
+                                            <!-- Dynamic buttons will be inserted here -->
+                                        </div>
+                                        <button type="button" id="add-telegram-button-btn" class="mt-3 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">+ Buton Ekle</button>
+                                    </div>
+
+                                    <div class="mt-6 pt-6 border-t">
+                                        <h4 class="text-lg font-semibold mb-4">Telegram'a Özel Sistem Mesajları</h4>
+                                        <!-- Order Info Request -->
+                                        <div class="mb-6">
+                                            <label for="telegram-order-info-request" class="block text-md font-medium mb-2">Sipariş Bilgisi İstek Mesajı</label>
+                                            <p class="text-sm text-gray-500 mb-2">"Sipariş Bilgisi" butonu tıklandığında kullanıcıdan sipariş numarası istemek için gösterilir.</p>
+                                            <textarea id="telegram-order-info-request" name="order_info_request" rows="2" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                        </div>
+
+                                        <!-- Info Request Confirmation -->
+                                        <div class="mb-6">
+                                            <label for="telegram-info-request-confirmation" class="block text-md font-medium mb-2">Bilgi Alma Onay Mesajı</label>
+                                            <p class="text-sm text-gray-500 mb-2">"Bilgi Almak" butonu tıklandığında kullanıcıya gösterilir.</p>
+                                            <textarea id="telegram-info-request-confirmation" name="info_request_confirmation" rows="2" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                        </div>
+
+                                        <!-- Telegram Service Unavailable -->
+                                        <div class="mb-6">
+                                            <label for="telegram-service-unavailable" class="block text-md font-medium mb-2">Sipariş Servisi Kapalı Mesajı</label>
+                                            <p class="text-sm text-gray-500 mb-2">Sipariş sorgulama servisi (Telegram) mevcut olmadığında gösterilir.</p>
+                                            <textarea id="telegram-service-unavailable" name="telegram_service_unavailable" rows="2" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-8 pt-5 border-t">
+                                    <button type="button" id="save-telegram-settings" class="px-6 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">Telegram Ayarlarını Kaydet</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+                <section id="settings-page" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4">Ayarlar</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Left Column: Settings -->
+                        <div class="lg:col-span-2">
+                            <div class="flex space-x-4 border-b mb-4">
+                                <button class="py-2 px-4 text-lg font-medium text-gray-500 hover:text-gray-700 focus:outline-none" data-tab="pre-chat">Pre-chat</button>
+                                <button class="py-2 px-4 text-lg font-medium text-gray-500 hover:text-gray-700 focus:outline-none" data-tab="themes">Temalar</button>
+                                <button class="py-2 px-4 text-lg font-medium text-gray-500 hover:text-gray-700 focus:outline-none" data-tab="canned-responses">Kalıp Cümleler</button>
+                                <button class="py-2 px-4 text-lg font-medium text-gray-500 hover:text-gray-700 focus:outline-none" data-tab="survey">Anket</button>
+                            </div>
+                            <div id="settings-tab-content">
+                                <div id="pre-chat-tab" class="hidden">
+                                    <div class="card p-6 rounded-lg shadow-md max-w-4xl">
+                                        <h3 class="text-xl font-semibold mb-6 border-b pb-4">Pre-chat Formu Ayarları</h3>
+                                        <form id="prechat-settings-form">
+                                            <!-- Feature Toggle -->
+                                            <div class="flex items-center justify-between mb-6">
+                                                <span class="text-lg font-medium">Pre-chat Formunu Aktif Et</span>
+                                                <label for="prechat-enabled" class="flex items-center cursor-pointer">
+                                                    <div class="relative">
+                                                        <input type="checkbox" id="prechat-enabled" name="enabled" class="sr-only">
+                                                        <div class="block bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full"></div>
+                                                        <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <!-- Survey Questions Builder -->
+                                            <div class="mb-6 pt-6 border-t">
+                                                <h4 class="text-md font-medium mb-4">Form Soruları</h4>
+                                                <div id="prechat-questions-container" class="space-y-4">
+                                                    <!-- Questions will be dynamically added here by JS -->
+                                                </div>
+                                                <button type="button" id="add-prechat-question" class="mt-4 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">+ Soru Ekle</button>
+                                            </div>
+
+                                            <!-- Save Button -->
+                                            <div class="mt-8 pt-5 border-t">
+                                                <button type="button" id="save-prechat-settings" class="px-6 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">Ayarları Kaydet</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div id="themes-tab" class="hidden">
+                                    <div class="card p-6 rounded-lg shadow-md max-w-2xl">
+                                        <h3 class="text-xl font-semibold mb-6 border-b pb-4">Tema Ayarları</h3>
+                                        <form id="theme-form" enctype="multipart/form-data">
+                                            <!-- Primary Color -->
+                                            <div class="mb-6">
+                                                <label for="theme-primary-color" class="block text-lg font-medium mb-2">Ana Renk</label>
+                                                <p class="text-sm text-gray-500 mb-2">Sohbet penceresinin başlık rengini ve gönderilen mesaj baloncuğunu belirler.</p>
+                                                <input type="color" id="theme-primary-color" name="primary_color" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#4F46E5">
+                                            </div>
+
+                                            <!-- Font Selection -->
+                                            <div class="mb-6">
+                                                <label for="theme-font" class="block text-lg font-medium mb-2">Yazı Tipi</label>
+                                                <p class="text-sm text-gray-500 mb-2">Sohbet penceresinde kullanılacak yazı tipini seçin.</p>
+                                                <select id="theme-font" name="font" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300">
+                                                    <option>Inter</option>
+                                                    <option>Roboto</option>
+                                                    <option>Open Sans</option>
+                                                    <option>Lato</option>
+                                                    <option value="CustomFont">Özel Font</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Bot Icon -->
+                                            <div class="mb-6">
+                                                <label for="theme-bot-icon" class="block text-lg font-medium mb-2">Bot İkonu</label>
+                                                <p class="text-sm text-gray-500 mb-2">Sohbet başlığında görünecek ikonu yükleyin (tercihen .png, .jpg, .svg).</p>
+                                                <div class="flex items-center">
+                                                    <img id="bot-icon-preview" src="{{ url_for('static', filename='default_bot_icon.png') }}" alt="Bot Icon Preview" class="h-10 w-10 rounded-full mr-4 object-cover">
+                                                    <input type="file" id="theme-bot-icon" name="bot_icon" accept="image/*" class="block w-full text-sm text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                                </div>
+                                            </div>
+
+                                            <!-- Bot Name -->
+                                            <div class="mb-6">
+                                                <label for="theme-bot-name" class="block text-lg font-medium mb-2">Bot İsmi</label>
+                                                <p class="text-sm text-gray-500 mb-2">Sohbet başlığında görünecek ismi belirleyin.</p>
+                                                <input type="text" id="theme-bot-name" name="bot_name" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm" placeholder="Bot'un adını girin...">
+                                            </div>
+
+                                            <!-- Advanced Theme Settings -->
+                                            <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                                                <h4 class="text-lg font-semibold mb-4">Gelişmiş Tema Ayarları</h4>
+
+                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                    <!-- Light Mode Settings -->
+                                                    <div>
+                                                        <h5 class="text-md font-medium mb-4 border-b pb-2">Aydınlık Mod</h5>
+                                                        <div class="space-y-4">
+                                                            <div>
+                                                                <label for="theme-page-bg-color-light" class="block text-sm font-medium mb-1">Sayfa Arka Planı</label>
+                                                                <input type="color" id="theme-page-bg-color-light" name="page_bg_color_light" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#F3F4F6">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-chat-bg-color-light" class="block text-sm font-medium mb-1">Sohbet Arka Planı</label>
+                                                                <input type="color" id="theme-chat-bg-color-light" name="chat_bg_color_light" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#FFFFFF">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-input-bg-color-light" class="block text-sm font-medium mb-1">Giriş Alanı Arka Planı</label>
+                                                                <input type="color" id="theme-input-bg-color-light" name="input_bg_color_light" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#FFFFFF">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-input-text-color-light" class="block text-sm font-medium mb-1">Giriş Alanı Yazısı</label>
+                                                                <input type="color" id="theme-input-text-color-light" name="input_text_color_light" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#1F2937">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-user-bubble-color-light" class="block text-sm font-medium mb-1">Kullanıcı Baloncuğu</label>
+                                                                <input type="color" id="theme-user-bubble-color-light" name="user_bubble_color_light" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#4F46E5">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-user-text-color-light" class="block text-sm font-medium mb-1">Kullanıcı Yazısı</label>
+                                                                <input type="color" id="theme-user-text-color-light" name="user_text_color_light" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#FFFFFF">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-bot-bubble-color-light" class="block text-sm font-medium mb-1">Bot Baloncuğu</label>
+                                                                <input type="color" id="theme-bot-bubble-color-light" name="bot_bubble_color_light" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#E5E7EB">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-bot-text-color-light" class="block text-sm font-medium mb-1">Bot Yazısı</label>
+                                                                <input type="color" id="theme-bot-text-color-light" name="bot_text_color_light" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#1F2937">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Dark Mode Settings -->
+                                                    <div>
+                                                        <h5 class="text-md font-medium mb-4 border-b pb-2">Karanlık Mod</h5>
+                                                        <div class="space-y-4">
+                                                            <div>
+                                                                <label for="theme-page-bg-color-dark" class="block text-sm font-medium mb-1">Sayfa Arka Planı</label>
+                                                                <input type="color" id="theme-page-bg-color-dark" name="page_bg_color_dark" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#111827">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-chat-bg-color-dark" class="block text-sm font-medium mb-1">Sohbet Arka Planı</label>
+                                                                <input type="color" id="theme-chat-bg-color-dark" name="chat_bg_color_dark" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#1F2937">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-input-bg-color-dark" class="block text-sm font-medium mb-1">Giriş Alanı Arka Planı</label>
+                                                                <input type="color" id="theme-input-bg-color-dark" name="input_bg_color_dark" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#374151">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-input-text-color-dark" class="block text-sm font-medium mb-1">Giriş Alanı Yazısı</label>
+                                                                <input type="color" id="theme-input-text-color-dark" name="input_text_color_dark" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#F9FAFB">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-user-bubble-color-dark" class="block text-sm font-medium mb-1">Kullanıcı Baloncuğu</label>
+                                                                <input type="color" id="theme-user-bubble-color-dark" name="user_bubble_color_dark" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#4F46E5">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-user-text-color-dark" class="block text-sm font-medium mb-1">Kullanıcı Yazısı</label>
+                                                                <input type="color" id="theme-user-text-color-dark" name="user_text_color_dark" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#FFFFFF">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-bot-bubble-color-dark" class="block text-sm font-medium mb-1">Bot Baloncuğu</label>
+                                                                <input type="color" id="theme-bot-bubble-color-dark" name="bot_bubble_color_dark" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#374151">
+                                                            </div>
+                                                            <div>
+                                                                <label for="theme-bot-text-color-dark" class="block text-sm font-medium mb-1">Bot Yazısı</label>
+                                                                <input type="color" id="theme-bot-text-color-dark" name="bot_text_color_dark" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg" value="#F9FAFB">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Font Size -->
+                                            <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                                                 <h4 class="text-lg font-semibold mb-4">Genel Yazı Tipi Ayarı</h4>
+                                                <div class="mb-6">
+                                                    <label for="theme-font-size" class="block text-md font-medium mb-2">Sohbet Yazı Tipi Boyutu (px)</label>
+                                                    <input type="number" id="theme-font-size" name="font_size" min="10" max="24" class="py-2 px-3 block w-24 border-gray-200 rounded-lg text-sm" value="14">
+                                                </div>
+                                            </div>
+
+                                            <!-- Custom Font Management -->
+                                            <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                                                <h4 class="text-lg font-semibold mb-2">Özel Font Yükleme</h4>
+                                                <p class="text-sm text-gray-500 mb-4">
+                                                    Kendi font dosyanızı (.woff2, .ttf, .otf) yükleyin. Yükledikten sonra, yukarıdaki "Yazı Tipi" menüsünden "Özel Font" seçeneğini seçerek aktif hale getirebilirsiniz.
+                                                </p>
+
+                                                <div class="mb-4">
+                                                    <label for="font-family-name" class="block text-md font-medium mb-2">Font Ailesi Adı</label>
+                                                    <p class="text-sm text-gray-500 mb-2">Sistemin fontu tanıması için bir ad verin (örn: "My Custom Font").</p>
+                                                    <input type="text" id="font-family-name" name="font_family_name" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm" placeholder="Örn: My Custom Font">
+                                                </div>
+
+                                                <div class="mb-4">
+                                                    <label for="custom-font-file" class="block text-md font-medium mb-2">Font Dosyası</label>
+                                                    <input type="file" id="custom-font-file" name="custom_font" accept=".woff,.woff2,.ttf,.otf" class="block w-full text-sm text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                                    <p class="text-xs text-gray-500 mt-2">Mevcut özel font: <span id="current-custom-font" class="font-mono">Yok</span></p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Save Button -->
+                                            <div class="mt-8 pt-5 border-t">
+                                                <button type="button" id="save-theme-settings" class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">Ayarları Kaydet</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div id="canned-responses-tab" class="hidden">
+                                    <div class="card p-6 rounded-lg shadow-md max-w-2xl">
+                                        <h3 class="text-xl font-semibold mb-6 border-b pb-4">Metin ve Mesaj Ayarları</h3>
+                                        <form id="canned-responses-form">
+                                            <h4 class="text-lg font-semibold mb-4">Bot Mesajları</h4>
+                                            <!-- Welcome Message -->
+                                            <div class="mb-6">
+                                                <label for="canned-welcome" class="block text-md font-medium mb-2">Karşılama Mesajı</label>
+                                                <p class="text-sm text-gray-500 mb-2">Sohbet başladığında kullanıcıya gösterilecek ilk mesaj.</p>
+                                                <textarea id="canned-welcome" name="welcome" rows="3" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                            </div>
+
+                                            <!-- Fallback Message -->
+                                            <div class.mb-6>
+                                                <label for="canned-fallback" class="block text-md font-medium mb-2">Anlaşılmayan Soru Mesajı</label>
+                                                <p class="text-sm text-gray-500 mb-2">Bot bir soruyu anlayamadığında verilecek cevap.</p>
+                                                <textarea id="canned-fallback" name="fallback" rows="3" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                            </div>
+
+                                            <!-- User ID Request Toggle -->
+                                            <div class="mb-6 pt-6 border-t">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="flex-grow">
+                                                        <label for="canned-get-id-from-chat" class="text-md font-medium">Chat Üzerinden ID İste</label>
+                                                        <p class="text-sm text-gray-500 mt-1">Pre-chat kapalı olduğunda, sohbetin başında kullanıcıdan ID istemek için bu ayarı aktif edin.</p>
+                                                    </div>
+                                                    <label for="canned-get-id-from-chat" class="flex items-center cursor-pointer">
+                                                        <div class="relative">
+                                                            <input type="checkbox" id="canned-get-id-from-chat" name="get_id_from_chat" class="sr-only">
+                                                            <div class="block bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full"></div>
+                                                            <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <!-- User ID Request Message -->
+                                            <div class="mb-6">
+                                                <label for="canned-user-id-request" class="block text-md font-medium mb-2">Kullanıcı ID İstek Mesajı</label>
+                                                <p class="text-sm text-gray-500 mb-2">Kullanıcıdan ID istendiğinde gösterilecek mesaj.</p>
+                                                <textarea id="canned-user-id-request" name="user_id_request" rows="3" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                            </div>
+
+                                            <h4 class="text-lg font-semibold mt-8 mb-4 border-t pt-6">Sistem Mesajları</h4>
+                                            <p class="text-sm text-gray-500 mb-4">Sohbet sırasında kullanıcıya gösterilen otomatik sistem mesajları.</p>
+
+                                            <!-- Human Request Initiated -->
+                                            <div class="mb-6">
+                                                <label for="canned-human-request-sending" class="block text-md font-medium mb-2">İnsan Destek Talebi (Gönderiliyor)</label>
+                                                <p class="text-sm text-gray-500 mb-2">Kullanıcı 'Müşteri Temsilcisi' butonuna tıkladığında gösterilir.</p>
+                                                <textarea id="canned-human-request-sending" name="human_request_sending" rows="2" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                            </div>
+
+                                            <!-- Human Request Queued -->
+                                            <div class="mb-6">
+                                                <label for="canned-human-request-queued" class="block text-md font-medium mb-2">İnsan Destek Talebi (Sırada)</label>
+                                                <p class="text-sm text-gray-500 mb-2">Talep başarılı bir şekilde sisteme iletildiğinde gösterilir.</p>
+                                                <textarea id="canned-human-request-queued" name="human_request_queued" rows="2" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                            </div>
+
+                                            <!-- Admin Connecting -->
+                                            <div class="mb-6">
+                                                <label for="canned-admin-connecting" class="block text-md font-medium mb-2">Operatör Bekleniyor</label>
+                                                <p class="text-sm text-gray-500 mb-2">Bot devrede değilken veya kullanıcı bir admin beklerken mesaj yazdığında gösterilir.</p>
+                                                <textarea id="canned-admin-connecting" name="admin_connecting" rows="2" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                            </div>
+
+                                            <!-- Admin Joined -->
+                                            <div class="mb-6">
+                                                <label for="canned-admin-joined" class="block text-md font-medium mb-2">Operatör Katıldı</label>
+                                                <p class="text-sm text-gray-500 mb-2">Bir operatör sohbete katıldığında kullanıcıya gösterilir.</p>
+                                                <textarea id="canned-admin-joined" name="admin_joined" rows="2" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                            </div>
+
+                                            <!-- Admin Left -->
+                                            <div class="mb-6">
+                                                <label for="canned-admin-left" class="block text-md font-medium mb-2">Operatör Ayrıldı</label>
+                                                <p class="text-sm text-gray-500 mb-2">Operatör sohbetten ayrılıp tekrar bota yönlendirdiğinde gösterilir.</p>
+                                                <textarea id="canned-admin-left" name="admin_left" rows="2" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                            </div>
+
+                                            <!-- Admin Closed Chat -->
+                                            <div class="mb-6">
+                                                <label for="canned-admin-closed-chat" class="block text-md font-medium mb-2">Operatör Sohbeti Kapattı</label>
+                                                <p class="text-sm text-gray-500 mb-2">Operatör sohbeti tamamen sonlandırdığında gösterilir.</p>
+                                                <textarea id="canned-admin-closed-chat" name="admin_closed_chat" rows="2" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                            </div>
+
+                                            <h4 class="text-lg font-semibold mt-8 mb-4 border-t pt-6">Diğer Bot Mesajları</h4>
+
+                                            <!-- Intent Process Error -->
+                                            <div class="mb-6">
+                                                <label for="canned-intent-process-error" class="block text-md font-medium mb-2">Niyet İşleme Hatası Mesajı</label>
+                                                <p class="text-sm text-gray-500 mb-2">Bot bir niyeti anladığında ama ona karşılık bir cevap bulamadığında gösterilir.</p>
+                                                <textarea id="canned-intent-process-error" name="intent_process_error" rows="2" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                            </div>
+
+                                            <!-- Unknown Intent Response -->
+                                            <div class="mb-6">
+                                                <label for="canned-unknown-intent-response" class="block text-md font-medium mb-2">Bilinmeyen Niyet Cevabı</label>
+                                                <p class="text-sm text-gray-500 mb-2">Bot bir niyet için cevap bulduğunda ama cevap bloğu boş olduğunda gösterilir.</p>
+                                                <textarea id="canned-unknown-intent-response" name="unknown_intent_response" rows="2" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500"></textarea>
+                                            </div>
+
+                                            <!-- Save Button -->
+                                            <div class="mt-8 pt-5 border-t">
+                                                <button type="button" id="save-canned-responses-settings" class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">Ayarları Kaydet</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div id="survey-tab" class="hidden">
+                                    <div class="card p-6 rounded-lg shadow-md max-w-4xl">
+                                        <h3 class="text-xl font-semibold mb-6 border-b pb-4">Anket Ayarları</h3>
+                                        <form id="survey-settings-form">
+                                            <!-- Feature Toggle -->
+                                            <div class="flex items-center justify-between mb-6">
+                                                <span class="text-lg font-medium">Anketi Aktif Et</span>
+                                                <label for="survey-enabled" class="flex items-center cursor-pointer">
+                                                    <div class="relative">
+                                                        <input type="checkbox" id="survey-enabled" name="enabled" class="sr-only">
+                                                        <div class="block bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full"></div>
+                                                        <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <!-- Trigger Conditions -->
+                                            <div class="mb-6">
+                                                <h4 class="text-md font-medium mb-2">Anket Tetikleyicileri</h4>
+                                                <p class="text-sm text-gray-500 mb-4">Anketin hangi durumlarda gösterileceğini seçin.</p>
+                                                <div class="space-y-2">
+                                                    <div class="flex items-center">
+                                                        <input id="survey-trigger-admin-close" name="trigger_on_admin_close" type="checkbox" class="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                                        <label for="survey-trigger-admin-close" class="ml-3 block text-sm font-medium">Yönetici sohbeti kapattığında</label>
+                                                    </div>
+                                                    <div class="flex items-center">
+                                                        <input id="survey-trigger-user-inactive" name="trigger_on_user_inactive" type="checkbox" class="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                                        <label for="survey-trigger-user-inactive" class="ml-3 block text-sm font-medium">Kullanıcı 5dk işlem yapmadığında</label>
+                                                    </div>
+                                                    <div class="flex items-center">
+                                                        <input id="survey-trigger-bot-end" name="trigger_on_bot_end" type="checkbox" class="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                                        <label for="survey-trigger-bot-end" class="ml-3 block text-sm font-medium">Chatbot sohbeti sonlandırdığında</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Trigger Phrases -->
+                                            <div class="mb-6 pt-6 border-t">
+                                                <h4 class="text-md font-medium mb-2">Özel Tetikleyici Cümleler</h4>
+                                                <p class="text-sm text-gray-500 mb-4">Kullanıcı bu cümlelerden birini yazdığında anketin başlamasını sağlayın (her biri yeni bir satırda).</p>
+                                                <div class="flex items-center mb-2">
+                                                    <input id="survey-trigger-phrase" name="trigger_on_phrase" type="checkbox" class="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                                    <label for="survey-trigger-phrase" class="ml-3 block text-sm font-medium">Cümle ile tetiklemeyi aktif et</label>
+                                                </div>
+                                                <textarea id="survey-trigger-phrases" name="trigger_phrases" rows="4" class="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" placeholder="Örnek:Anketi başlat/Ankete katılmak istiyorum"></textarea>
+                                            </div>
+
+                                            <!-- Survey Questions Builder -->
+                                            <div class="mb-6 pt-6 border-t">
+                                                <h4 class="text-md font-medium mb-4">Anket Soruları</h4>
+                                                <div id="survey-questions-container" class="space-y-4">
+                                                    <!-- Questions will be dynamically added here by JS -->
+                                                </div>
+                                                <button type="button" id="add-survey-question" class="mt-4 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">+ Soru Ekle</button>
+                                            </div>
+
+                                            <!-- Survey Theme -->
+                                            <div class="mb-6 pt-6 border-t">
+                                                <h4 class="text-md font-medium mb-4">Anket Teması</h4>
+                                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                                    <div>
+                                                        <label for="survey-theme-background_color" class="block text-sm font-medium mb-1">Arka Plan</label>
+                                                        <input type="color" id="survey-theme-background_color" name="background_color" value="#FFFFFF" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg">
+                                                    </div>
+                                                    <div>
+                                                        <label for="survey-theme-text_color" class="block text-sm font-medium mb-1">Yazı Rengi</label>
+                                                        <input type="color" id="survey-theme-text_color" name="text_color" value="#000000" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg">
+                                                    </div>
+                                                    <div>
+                                                        <label for="survey-theme-bubble_color" class="block text-sm font-medium mb-1">Baloncuk Rengi</label>
+                                                        <input type="color" id="survey-theme-bubble_color" name="bubble_color" value="#F0F0F0" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg">
+                                                    </div>
+                                                    <div>
+                                                        <label for="survey-theme-button_color" class="block text-sm font-medium mb-1">Buton Rengi</label>
+                                                        <input type="color" id="survey-theme-button_color" name="button_color" value="#4F46E5" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg">
+                                                    </div>
+                                                    <div>
+                                                        <label for="survey-theme-button_text_color" class="block text-sm font-medium mb-1">Buton Yazı Rengi</label>
+                                                        <input type="color" id="survey-theme-button_text_color" name="button_text_color" value="#FFFFFF" class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Save Button -->
+                                            <div class="mt-8 pt-5 border-t">
+                                                <button type="button" id="save-survey-settings" class="px-6 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">Ayarları Kaydet</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Template for a survey question -->
+                                <template id="survey-question-template">
+                                    <div class="p-4 border rounded-lg survey-question-item bg-gray-50 dark:bg-gray-700/50">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <label class="block text-sm font-medium">Soru</label>
+                                            <button type="button" class="remove-question-btn text-red-500 hover:text-red-700">&times;</button>
+                                        </div>
+                                        <input type="text" class="question-text w-full p-2 border rounded-md" placeholder="Anket sorusunu buraya yazın..." required>
+                                        <div class="mt-2">
+                                            <label class="block text-sm font-medium">Soru Tipi</label>
+                                            <select class="question-type w-full p-2 border rounded-md">
+                                                <option value="rating">Puanlama (1-5)</option>
+                                                <option value="textarea">Açık Uçlu (Metin)</option>
+                                                <option value="multiple-choice">Çoktan Seçmeli</option>
+                                            </select>
+                                        </div>
+                                        <div class="options-container mt-2 space-y-2 hidden">
+                                            <label class="block text-sm font-medium">Seçenekler</label>
+                                            <!-- Options will be added here by JS -->
+                                        </div>
+                                        <button type="button" class="add-option-btn mt-2 px-3 py-1 text-xs font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 hidden">+ Seçenek Ekle</button>
+                                    </div>
+                                </template>
+
+                                <!-- Template for a survey option -->
+                                <template id="survey-option-template">
+                                    <div class="flex items-center gap-2 survey-option-item">
+                                        <input type="text" class="option-text w-full p-1 border rounded-md" placeholder="Seçenek metni...">
+                                        <button type="button" class="remove-option-btn text-red-500 hover:text-red-700">&times;</button>
+                                    </div>
+                                </template>
+
+                                <!-- Reusable Template for a prechat/survey question -->
+                                <template id="question-template">
+                                    <div class="p-4 border rounded-lg question-item bg-gray-50 dark:bg-gray-700/50">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <label class="block text-sm font-medium">Soru</label>
+                                            <button type="button" class="remove-question-btn text-red-500 hover:text-red-700">&times;</button>
+                                        </div>
+                                        <input type="text" class="question-text w-full p-2 border rounded-md" placeholder="Soru metnini buraya yazın..." required>
+                                        <div class="mt-2">
+                                            <label class="block text-sm font-medium">Soru Tipi</label>
+                                            <select class="question-type w-full p-2 border rounded-md">
+                                                <option value="name">İsim</option>
+                                                <option value="text">Kısa Cevap (Metin)</option>
+                                                <option value="textarea">Paragraf (Uzun Metin)</option>
+                                                <option value="multiple-choice">Çoktan Seçmeli</option>
+                                                <option value="email">E-posta</option>
+                                            </select>
+                                        </div>
+                                        <div class="options-container mt-2 space-y-2 hidden">
+                                            <label class="block text-sm font-medium">Seçenekler</label>
+                                            <!-- Options will be added here by JS -->
+                                        </div>
+                                        <button type="button" class="add-option-btn mt-2 px-3 py-1 text-xs font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 hidden">+ Seçenek Ekle</button>
+                                    </div>
+                                </template>
+
+                                <!-- Reusable Template for a question option -->
+                                <template id="option-template">
+                                    <div class="flex items-center gap-2 option-item">
+                                        <input type="text" class="option-text w-full p-1 border rounded-md" placeholder="Seçenek metni...">
+                                        <button type="button" class="remove-option-btn text-red-500 hover:text-red-700">&times;</button>
+                                    </div>
+                                </template>
+
+                                <!-- Template for a Telegram menu button -->
+                                <template id="telegram-button-template">
+                                    <div class="flex items-center space-x-2">
+                                        <input type="text" class="telegram-button-label w-1/2 px-2 py-1 border rounded-md" placeholder="Buton Metni">
+                                        <input type="text" class="telegram-button-value w-1/2 px-2 py-1 border rounded-md" placeholder="Buton Değeri (örn: /start)">
+                                        <button type="button" class="remove-telegram-button-btn text-red-500 hover:text-red-700">&times;</button>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        <!-- Right Column: Preview -->
+                        <div class="lg:col-span-1">
+                            <div class="sticky top-4">
+                                <h3 class="text-xl font-semibold mb-2 text-center">Önizleme</h3>
+                                <div class="flex items-center justify-center mb-3">
+                                    <span class="text-sm font-medium mr-2">Aydınlık</span>
+                                    <label for="preview-theme-toggle" class="flex items-center cursor-pointer">
+                                        <div class="relative">
+                                            <input type="checkbox" id="preview-theme-toggle" class="sr-only">
+                                            <div class="block bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full"></div>
+                                            <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                        </div>
+                                    </label>
+                                    <span class="text-sm font-medium ml-2">Karanlık</span>
+                                </div>
+                                <div id="chat-preview-container" class="w-full max-w-sm mx-auto border border-gray-200 rounded-lg shadow-lg">
+                                    <div id="chat-preview-header" class="bg-blue-600 text-white p-4 rounded-t-lg flex items-center">
+                                        <img id="chat-preview-bot-icon" src="{{ url_for('static', filename='default_bot_icon.png') }}" alt="Bot Icon" class="h-8 w-8 rounded-full mr-3">
+                                        <h3 id="chat-preview-bot-name" class="text-lg font-semibold">Chatbot</h3>
+                                    </div>
+                                    <div id="chat-preview-messages" class="p-4 h-80 overflow-y-auto bg-white" style="font-size: 14px;">
+                                        <div class="mb-4">
+                                            <div id="chat-preview-welcome" class="chat-preview-bot-bubble bg-gray-200 text-gray-800 p-3 rounded-lg inline-block">
+                                                Merhaba! Size nasıl yardımcı olabilirim?
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 text-right">
+                                            <div id="chat-preview-user-bubble" class="bg-blue-500 text-white p-3 rounded-lg inline-block">
+                                                Ürünleriniz hakkında bilgi alabilir miyim?
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div id="chat-preview-fallback" class="chat-preview-bot-bubble bg-gray-200 text-gray-800 p-3 rounded-lg inline-block">
+                                                Üzgünüm, bu soruyu anlayamadım.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="chat-preview-footer" class="p-4 border-t bg-gray-50 rounded-b-lg">
+                                        <input id="chat-preview-input" type="text" placeholder="Mesajınızı yazın..." class="w-full px-3 py-2 border rounded-lg" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    <!-- User Management Modals -->
+    <div id="user-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md card">
+            <div class="mt-3">
+                <h3 id="user-modal-title" class="text-lg leading-6 font-medium text-center">Kullanıcı Düzenle</h3>
+                <form id="user-form" class="mt-4 space-y-4">
+                    <input type="hidden" id="user-id" name="id">
+                    <div>
+                                        <label for="user-email" class="block text-sm font-medium">E-posta</label>
+                                        <input type="email" id="user-email" name="email" class="mt-1 block w-full px-3 py-2 border rounded-md" required>
+                    </div>
+                    <div>
+                        <label for="user-password" class="block text-sm font-medium">Şifre (Yeni kullanıcı için gereklidir)</label>
+                        <input type="password" id="user-password" name="password" class="mt-1 block w-full px-3 py-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label for="user-tags" class="block text-sm font-medium">Etiketler (virgülle ayırın)</label>
+                        <input type="text" id="user-tags" name="tags" class="mt-1 block w-full px-3 py-2 border rounded-md" placeholder="örn: Satış, Destek, Muhasebe">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium">İzinler</label>
+                        <div id="user-permissions" class="mt-2 grid grid-cols-2 gap-2">
+                            <div class="flex items-center">
+                                <input id="perm-dashboard" name="permissions" value="nav-dashboard" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <label for="perm-dashboard" class="ml-3 block text-sm">Kontrol Paneli</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="perm-unanswered" name="permissions" value="nav-unanswered" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <label for="perm-unanswered" class="ml-3 block text-sm">Cevaplanmamış Sorular</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="perm-answered" name="permissions" value="nav-answered" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <label for="perm-answered" class="ml-3 block text-sm">Cevaplanmış Sorular</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="perm-chats" name="permissions" value="nav-chats" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <label for="perm-chats" class="ml-3 block text-sm">Sohbet Ekranları</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="perm-library" name="permissions" value="nav-library" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <label for="perm-library" class="ml-3 block text-sm">Kütüphane</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="perm-notifications" name="permissions" value="nav-notifications" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <label for="perm-notifications" class="ml-3 block text-sm">Bildirimler</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="perm-archives" name="permissions" value="nav-archives" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <label for="perm-archives" class="ml-3 block text-sm">Arşivler</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="perm-settings" name="permissions" value="nav-settings" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <label for="perm-settings" class="ml-3 block text-sm">Ayarlar</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="perm-connections" name="permissions" value="nav-connections" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <label for="perm-connections" class="ml-3 block text-sm">Bağlantılar</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="perm-flows" name="permissions" value="nav-flows" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <label for="perm-flows" class="ml-3 block text-sm">Akışlar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="items-center px-4 py-3 mt-4 text-right">
+                        <button id="user-modal-cancel-btn" type="button" class="px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md w-auto shadow-sm hover:bg-gray-400">İptal</button>
+                        <button id="user-modal-save-btn" type="submit" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-auto shadow-sm hover:bg-green-700 ml-2">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="toast-notification" class="toast"></div>
+    <div id="archive-chat-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-10 mx-auto p-5 border w-full max-w-2xl shadow-lg rounded-md card">
+            <div class="flex justify-between items-center pb-3">
+                <h3 class="text-lg leading-6 font-medium">Arşivlenmiş Sohbet Detayı</h3>
+                <button id="archive-modal-close-btn" class="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="mt-2">
+                <div id="archive-modal-details" class="mb-4 text-sm"></div>
+                <div id="archive-modal-history" class="h-96 overflow-y-auto p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                    <p>Sohbet geçmişi yükleniyor...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="flow-editor-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-10 mx-auto p-5 border w-full max-w-2xl shadow-lg rounded-md card">
+            <h3 id="flow-modal-title" class="text-lg leading-6 font-medium text-center mb-4">Akış Düzenle</h3>
+            <form id="flow-form">
+                <input type="hidden" id="flow-id">
+                <div class="space-y-4">
+                    <div>
+                        <label for="flow-name" class="block text-sm font-medium">Akış Adı</label>
+                        <input type="text" id="flow-name" class="w-full mt-1 px-3 py-2 border rounded-md" required>
+                    </div>
+                    <div>
+                        <label for="flow-initial-prompt" class="block text-sm font-medium">Başlangıç Mesajı (her biri yeni satırda)</label>
+                        <textarea id="flow-initial-prompt" rows="3" class="w-full mt-1 px-3 py-2 border rounded-md"></textarea>
+                    </div>
+                    <div>
+                        <label for="flow-state" class="block text-sm font-medium">Ayarlanacak Durum (State)</label>
+                        <select id="flow-state" class="w-full mt-1 px-3 py-2 border rounded-md" required>
+                            <!-- Options will be populated by JS -->
+                        </select>
+                    </div>
+                    <div class="p-4 border rounded-md">
+                        <h4 class="text-md font-medium">Cevap İşleyici (Reply Handler)</h4>
+                        <div class="mt-2 space-y-3">
+                            <div>
+                                <label for="flow-handler-type" class="block text-sm font-medium">İşleyici Tipi</label>
+                                <select id="flow-handler-type" class="w-full mt-1 px-3 py-2 border rounded-md">
+                                    <option value="">Yok</option>
+                                    <option value="telegram_order_lookup">Telegram Sipariş Sorgulama</option>
+                                </select>
+                            </div>
+                            <div id="flow-follow-up-container" class="p-3 border-t">
+                                <label class="block text-sm font-medium mb-2">Başarılı Sonuç Sonrası Takip</label>
+                                <div>
+                                    <label for="flow-follow-up-responses" class="block text-xs font-medium">Takip Mesajları (her biri yeni satırda)</label>
+                                    <textarea id="flow-follow-up-responses" rows="2" class="w-full mt-1 px-3 py-2 border rounded-md"></textarea>
+                                </div>
+                                <div class="mt-2">
+                                    <label class="block text-xs font-medium">Takip Butonları</label>
+                                    <div id="flow-follow-up-bubbles-container" class="space-y-2 mt-1"></div>
+                                    <button type="button" id="flow-add-follow-up-bubble-btn" class="mt-2 px-3 py-1 text-xs font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">+ Buton Ekle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="items-center px-4 py-3 mt-4 text-right">
+                    <button id="flow-modal-cancel-btn" type="button" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400">İptal</button>
+                    <button id="flow-modal-save-btn" type="submit" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 ml-2">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="answer-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md card">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium">Soruya Cevap Ver</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500 mb-4" id="modal-question-text"></p>
+                    <textarea id="modal-answer-textarea" rows="4" class="w-full px-3 py-2 border rounded-lg focus:outline-none" placeholder="Cevabınızı buraya yazın..."></textarea>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="modal-save-btn" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-auto shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300">Cevabı Kaydet</button>
+                    <button id="modal-cancel-btn" class="px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md w-auto shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 ml-2">İptal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="edit-library-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-full max-w-lg shadow-lg rounded-md card">
+            <div class="mt-3">
+                <h3 class="text-lg leading-6 font-medium text-center">Kütüphane Ögesini Düzenle</h3>
+                <div class="mt-4">
+                    <p class="text-sm mb-2"><strong>Niyet:</strong> <span id="edit-modal-intent-name"></span></p>
+                    <label for="edit-modal-responses-textarea" class="block text-sm font-medium mb-1">Cevaplar (her biri yeni bir satırda):</label>
+                    <textarea id="edit-modal-responses-textarea" rows="4" class="w-full px-3 py-2 border rounded-lg focus:outline-none" placeholder="Her cevabı yeni bir satıra yazın..."></textarea>
+
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium mb-1">Butonlar (Baloncuklar):</label>
+                        <div id="edit-modal-bubbles-container" class="space-y-2">
+                            </div>
+                        <button id="edit-modal-add-bubble-btn" type="button" class="mt-2 px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">+ Buton Ekle</button>
+                    </div>
+
+                    <div class="mt-4">
+                        <label for="edit-modal-action" class="block text-sm font-medium mb-1">Eylem (İsteğe Bağlı):</label>
+                        <select id="edit-modal-action" class="w-full px-3 py-2 border rounded-lg focus:outline-none">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium mb-1">İlişkili Niyetler:</label>
+                        <div id="edit-modal-intents-container" class="space-y-2">
+                            </div>
+                        <button id="edit-modal-add-intent-btn" type="button" class="mt-2 px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">+ Niyet Ekle</button>
+                    </div>
+                </div>
+                <div class="items-center px-4 py-3 mt-4 text-right">
+                    <button id="edit-modal-cancel-btn" class="px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md w-auto shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">İptal</button>
+                    <button id="edit-modal-save-btn" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-auto shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300 ml-2">Değişiklikleri Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="group-train-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-10 mx-auto p-5 border w-full max-w-lg shadow-lg rounded-md card">
+            <div class="mt-3">
+                <h3 class="text-lg leading-6 font-medium text-center">Toplu Gruplama ve Eğitme</h3>
+                <p class="text-center text-sm text-gray-500 mt-1 mb-4">Seçilen sorular için ortak bir cevap oluşturun.</p>
+                <div class="mt-4">
+                    <label for="group-train-responses-textarea" class="block text-sm font-medium mb-1">Ortak Cevaplar (her biri yeni bir satırda):</label>
+                    <textarea id="group-train-responses-textarea" rows="4" class="w-full px-3 py-2 border rounded-lg focus:outline-none" placeholder="Her cevabı yeni bir satıra yazın..."></textarea>
+
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium mb-1">Ortak Butonlar (Baloncuklar):</label>
+                        <div id="group-train-bubbles-container" class="space-y-2">
+                            </div>
+                        <button id="group-train-add-bubble-btn" type="button" class="mt-2 px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">+ Buton Ekle</button>
+                    </div>
+                </div>
+                <div class="items-center px-4 py-3 mt-4 text-right">
+                    <button id="group-train-cancel-btn" class="px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md w-auto shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">İptal</button>
+                    <button id="group-train-save-btn" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-auto shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300 ml-2">Grubu Oluştur ve Eğit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="regroup-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-10 mx-auto p-5 border w-full max-w-lg shadow-lg rounded-md card">
+            <div class="mt-3">
+                <h3 class="text-lg leading-6 font-medium text-center">Seçilen Niyetleri Yeniden Grupla</h3>
+                <p class="text-center text-sm text-gray-500 mt-1 mb-4">Seçilen tüm niyetler için yeni bir ortak cevap oluşturun.</p>
+                <div class="mt-4">
+                    <label for="regroup-responses-textarea" class="block text-sm font-medium mb-1">Yeni Ortak Cevaplar (her biri yeni bir satırda):</label>
+                    <textarea id="regroup-responses-textarea" rows="4" class="w-full px-3 py-2 border rounded-lg focus:outline-none" placeholder="Her cevabı yeni bir satıra yazın..."></textarea>
+
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium mb-1">Yeni Ortak Butonlar (Baloncuklar):</label>
+                        <div id="regroup-bubbles-container" class="space-y-2">
+                        </div>
+                        <button id="regroup-add-bubble-btn" type="button" class="mt-2 px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">+ Buton Ekle</button>
+                    </div>
+                </div>
+                <div class="items-center px-4 py-3 mt-4 text-right">
+                    <button id="regroup-cancel-btn" class="px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md w-auto shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">İptal</button>
+                    <button id="regroup-save-btn" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-auto shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300 ml-2">Yeniden Grupla ve Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script>
+        window.API_TOKEN = "{{ api_token or '' }}";
+        window.userPermissions = {{ user_permissions|tojson|safe }};
+        document.addEventListener('DOMContentLoaded', () => {
+            const userCount = {{ users|length if users is defined else 0 }};
+            if (userCount === 0) {
+                document.getElementById('login-view')?.classList.add('hidden');
+                document.getElementById('signup-view')?.classList.remove('hidden');
+            }
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/admin.js', v=cache_version) }}"></script>
+</body>
+</html>
