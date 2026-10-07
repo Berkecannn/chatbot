@@ -27,19 +27,19 @@
       "imap_configured": true,
       "smtp_configured": true,
       "imap_host": "imap.gmail.com",
-      "imap_user": "cbv2048@gmail.com",
-      "imap_password": "gAAAAABpAdfVJPnPIt_JjGdgirQ5BsUc8acvGhIdsasV3nS4ipdCvEaUj2BrfaNu9Rba2zUfhNT4GMlnkognincdGMSfyFj3Rh0XvC8d6wR7vdVwL0vHbhE=",
+      "imap_user": "",
+      "imap_password": "",
       "smtp_host": "smtp.gmail.com",
       "smtp_port": 587,
-      "smtp_user": "cbv2048@gmail.com",
-      "smtp_password": "gAAAAABpAdfVdpLdA1nLwH70OKHaT872TovU7e6dV3PgCgue4XzWMJ6I-RQtOiQPt4RrQeRgFZ0vNsOlRya2gmbgDlnIXRrs331eXIUcW1kV_03SDxcOmag=",
-      "smtp_sender": "cbv2048@gmail.com",
-      "notification_recipient": "cbv2048@gmail.com"
+      "smtp_user": "",
+      "smtp_password": "",
+      "smtp_sender": "",
+      "notification_recipient": ""
     },
     "telegram": {
       "enabled": true,
-      "bot_token": "gAAAAABpAdj4-iJ9nSPMRlts2OC9yUBSgTRjS4XMEs_6XU0UBEztkI7NAxFX9mmNaLWn7BsSaRycjxEhgmSuLdQ_akO7FZwKNt5QhCi0Rv9cP5rALMh2IKJo6rzCu6Y_STYuU4peSqHr",
-      "chat_id": "-4906260350",
+      "bot_token": "",
+      "chat_id": "",
       "initial_message": "merhaba",
       "buttons": [
         {
