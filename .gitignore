@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables
+.env
+
+# Log files
+*.log
+
+# Private runtime state
+data/
+venv/
+.venv/
+.env.*
+!.env.example
+app/static/custom/
+app/static/custom_fonts/
+*.db
+*.sqlite*
